@@ -12,7 +12,11 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jodu555/MySQLWrapper.git"
+    "url": "https://github.com/Jodu555/MySQLWrapper"
+  },
+  "bugs": {
+    "url" : "https://github.com/Jodu555/MySQLWrapper/issues",
+    "email" : "Jodu505@gmail.com"
   },
   "dependencies": {
     "mysql": "^2.18.1"
