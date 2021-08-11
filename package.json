@@ -7,11 +7,17 @@
     "start": "node src/index.js ",
     "dev": "nodemon src/index.js "
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [ "mysql API", "mysql", "mysql wrapper", "wrapper", "api"],
+  "author": "Jodu555",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jodu555/MySQLWrapper.git"
+  },
   "dependencies": {
-    "mysql": "^2.18.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.12"
   }
 }

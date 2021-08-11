@@ -1,9 +1,5 @@
-
-
 const Database = require("./Database");
-
 const db = Database.createDatabase('localhost', 'root', '', 'test');
-
 db.connect();
 
 db.createTable('testtable', {
