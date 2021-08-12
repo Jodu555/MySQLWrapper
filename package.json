@@ -2,12 +2,18 @@
   "name": "mysqlapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js ",
     "dev": "nodemon src/index.js "
   },
-  "keywords": [ "mysql API", "mysql", "mysql wrapper", "wrapper", "api"],
+  "keywords": [
+    "mysql API",
+    "mysql",
+    "mysql wrapper",
+    "wrapper",
+    "api"
+  ],
   "author": "Jodu555",
   "license": "ISC",
   "repository": {
@@ -15,8 +21,8 @@
     "url": "https://github.com/Jodu555/MySQLWrapper"
   },
   "bugs": {
-    "url" : "https://github.com/Jodu555/MySQLWrapper/issues",
-    "email" : "Jodu505@gmail.com"
+    "url": "https://github.com/Jodu555/MySQLWrapper/issues",
+    "email": "Jodu505@gmail.com"
   },
   "dependencies": {
     "mysql": "^2.18.1"
