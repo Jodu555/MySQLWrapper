@@ -1,4 +1,4 @@
-const { queryPartGeneration, removeKeyFromObject } = require('./utils');
+const { queryPartGeneration } = require('./generationUtils');
 class thingDatabase {
 	constructor(table_name, database, connection) {
 		this.table_name = table_name;
