@@ -37,21 +37,10 @@ class thingDatabase {
 		});
 	}
 
-	//TODO: Update Things function (to update multiple thinghs)
 	async update(search, thing) {
 		try {
-			removeKeyFromObject(thing, 'uuid');
-
 			if (!Object.keys(thing).length > 0) {
 				throw new Error('Invalid thing update Object');
-			}
-
-			let uuid = '';
-			if (!search.uuid) {
-				const searchresult = await this.get(search);
-				uuid = searchresult[0].UUID;
-			} else {
-				uuid = search.uuid;
 			}
 
 			thing.update = true;
@@ -71,7 +60,7 @@ class thingDatabase {
 					this.update(search, thing);
 				}
 			});
-			return await this.get({ uuid: uuid });
+			return await this.get(search);
 		} catch (error) {
 			const errormsg = `${this.name} Update Failed: searchTerm: ${JSON.stringify(
 				search
@@ -81,7 +70,8 @@ class thingDatabase {
 	}
 
 	async getOne(search) {
-		return await this.get(search)[0];
+		const result = await this.get(search);
+		return result[0];
 	}
 
 	async get(search) {
