@@ -1,4 +1,4 @@
-// const Database = require("./Database");
+const Database = require("./Database");
 // const db = Database.createDatabase('localhost', 'root', '', 'test');
 // db.connect();
 // db.createTable('testtable', {
@@ -18,4 +18,6 @@
 // console.log(db.validate('testtable', { UUID: 'dsdsd', text: 'from the nice application!' }));
 
 
-
+module.exports = {
+    Database,
+}

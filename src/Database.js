@@ -35,7 +35,7 @@ class DatabaseObject {
                 throw error;
             }
         });
-
+        console.log('Database Connected!');
     }
 
     disconnect() {
