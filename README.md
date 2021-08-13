@@ -14,7 +14,7 @@ An NodeJS mysql wrapper to convert objects to the full query String! Nice to sim
 ### Establish a connection & Create a Table 
 
 ```javascript
-const { Database } = require('mysqlapi');
+const { Database } = require('@jodu555/mysqlapi');
 
 const database = Database.createDatabase('host', 'username', 'password', 'database');
 database.connect();
@@ -30,10 +30,10 @@ database.createTable('users', {
 });
 ```
 
-### Work with the database in other classes 
+### Work with the database in other classes | PUT this before you all over before you acces the database
 
 ```javascript
-const { Database } = require('mysqlapi');
+const { Database } = require('@jodu555/mysqlapi');
 const database = Database.getDatabase();
 database. //some other function like get('tablename')
 ```

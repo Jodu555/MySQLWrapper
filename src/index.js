@@ -1,6 +1,6 @@
 const Database = require("./Database");
-// const db = Database.createDatabase('localhost', 'root', '', 'test');
-// db.connect();
+const db = Database.createDatabase('localhost', 'root', '', 'test');
+db.connect();
 // db.createTable('testtable', {
 //     'UUID': 'varchar(64)',
 //     'text': 'TEXT'
