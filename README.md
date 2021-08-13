@@ -75,6 +75,10 @@ await database.get('tablename').delete({
     });
 ```
 
+## Projects using this API
+
+* [Monitoring-System](https://github.com/Jodu555/MonitoringSystem-Core)
+
 ## Todos
 
 * [ ] Validate if the Validation works just fine
