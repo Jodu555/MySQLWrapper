@@ -19,7 +19,7 @@ const { Database } = require('@jodu555/mysqlapi');
 const database = Database.createDatabase('host', 'username', 'password', 'database');
 database.connect();
 
-database.createTable('users', {
+database.createTable('tablename', {
     options: {
         PK: 'UUID'
     },
@@ -27,6 +27,29 @@ database.createTable('users', {
         type: 'columType',
         null: false,
     },
+});
+```
+
+### Create a Table with Foreign Keys
+#### This Means that to the colum user_UUID will created an FK to the table users in the colum UUID
+
+```javascript
+database.createTable('services', {
+    options: {
+        PK: 'UUID',
+        FK: {
+            'user_UUID': 'users/UUID',
+        },
+    },
+    'UUID': {
+        type: 'varchar(64)',
+        null: false,
+    },
+    'user_UUID': {
+        type: 'varchar(64)',
+        null: false,
+    },
+    'name': 'varchar(64)',
 });
 ```
 
