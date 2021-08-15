@@ -104,6 +104,7 @@ await database.get('tablename').delete({
 
 ## Todos
 
+* [ ] Add possibillity to createTable to auto implement created_AT / updated_AT
 * [ ] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
 
