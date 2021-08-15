@@ -65,7 +65,7 @@ database. //some other function like get('tablename')
 
 ```javascript
 database.get('tablename').create({
-    columName: 'columValue'.
+    columName: 'columValue',
 });
 ```
 
@@ -104,7 +104,8 @@ await database.get('tablename').delete({
 
 ## Todos
 
-* [ ] Add possibillity to createTable to auto implement created_AT / updated_AT
+* [ ] Add possibility to createTable to auto implement the timestamps created_AT / updated_AT
+* [ ] Add the possibility to activate softdelete and add in the timestamps
 * [ ] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
 
