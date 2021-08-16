@@ -90,12 +90,11 @@ class DatabaseObject {
     }
 
     parseTimeStamps(options) {
-        const CREATE_COLUM_NAME = 'created_at';
-        const UPDATE_COLUM_NAME = 'updated_at';
         const DELETE_COLUM_NAME = 'deleted_at';
-
-        const stamps = new Map();
-        stamps.set(timestamps.createdAt, CREATE_COLUM_NAME)
+        const stamps = new Map([
+            ['createdAt', 'created_at'],
+            ['updatedAt', 'updated_at']
+        ]);
 
         let output = {};
         const timestamps = options.timestamps;
