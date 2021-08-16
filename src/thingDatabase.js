@@ -13,14 +13,11 @@ class thingDatabase {
 		if (this.options && timestamps) {
 			Object.keys(timestamps).forEach(key => {
 				if (timestamps[key] !== 'deleted_at') {
-					thing[timestamps[key]] = true;
+					thing[timestamps[key]] = Date.now();
 				} else {
 					thing[timestamps[key]] = false;
 				}
-
 			});
-			if (thing.created_at) thing.created_at = Date.now()
-			if (thing.updated_at) thing.updated_at = Date.now()
 		}
 		const len = Object.keys(thing).length;
 		const values = [];
@@ -55,7 +52,7 @@ class thingDatabase {
 	async update(search, thing) {
 		if (this.options && this.options.timestamps) {
 			if (this.options.timestamps.updatedAt) {
-				thing.updated_at = Date.now();
+				thing[this.options.timestamps.updatedAt] = Date.now();
 			}
 		}
 		try {
@@ -122,7 +119,9 @@ class thingDatabase {
 
 	async delete(search) {
 		if (this.options && this.options.softdelete && this.options.timestamps && this.options.timestamps.deletedAt) {
-			await this.update(search, { deleted_at: Date.now() });
+			const obj = {}
+			obj[this.options.timestamps.deletedAt] = Date.now();
+			await this.update(search, obj);
 			return;
 		}
 		let query = 'DELETE FROM ' + this.table_name + ' WHERE ';

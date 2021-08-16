@@ -53,6 +53,41 @@ database.createTable('services', {
 });
 ```
 
+### Create a Table with timestamps e.g (created_at, updated_at) and softdelete with deleted_at
+
+```javascript
+database.createTable('services', {
+    options: {
+        //Enables softdelete
+        softdelete: true,
+        //Enable all available timestamps
+        timestamps: true,
+        //Enable only one or two with default naming only deletedAt if softdelete is activ
+        timestamps: {
+            cratedAt: true,
+            updatedAt: false,
+            deletedAt: true
+        },
+        //Enable only one or two with custom colum naming only deletedAt if softdelete is activ
+        timestamps: {
+            cratedAt: 'created_at',
+            updatedAt: 'updated_at',
+            deletedAt: 'deleted_at'
+        },
+        PK: 'UUID',
+    },
+    'UUID': {
+        type: 'varchar(64)',
+        null: false,
+    },
+    'user_UUID': {
+        type: 'varchar(64)',
+        null: false,
+    },
+    'name': 'varchar(64)',
+});
+```
+
 ### Work with the database in other classes | PUT this before you all over before you acces the database
 
 ```javascript
