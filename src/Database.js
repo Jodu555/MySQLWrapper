@@ -51,13 +51,23 @@ class DatabaseObject {
     }
 
     createTable(tablename, table) {
-
-
+        const stamps = new Map([
+            ['createdAt', 'created_at'],
+            ['updatedAt', 'updated_at']
+        ]);
         const tablecopy = JSON.parse(JSON.stringify(table));
         const options = table.options;
         delete table.options;
 
-
+        if (options && options.timestamps) {
+            options.timestamps = this.parseTimeStamps(options);
+            stamps.forEach((value, key) => {
+                table[value] = {
+                    type: 'varchar(64)',
+                    null: false
+                };
+            });
+        }
 
         let i = 0, parts = '', max = Object.keys(table).length;
         Object.keys(table).forEach(name => {
@@ -71,7 +81,7 @@ class DatabaseObject {
             if (max !== i) parts += ', ';
         });
 
-        parse = parseFKandPK(options, parts);
+        parts = this.parseFKandPK(tablename, options, parts);
 
 
         let sql = 'CREATE TABLE IF NOT EXISTS ' + tablename + ' (' + parts + ')';
@@ -86,7 +96,7 @@ class DatabaseObject {
                 };
             };
         });
-        this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, this, this.connection) })
+        this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, options, this, this.connection) })
     }
 
     parseTimeStamps(options) {
@@ -99,8 +109,8 @@ class DatabaseObject {
         let output = {};
         const timestamps = options.timestamps;
         if (typeof timestamps === 'boolean') {
-            output.createdAt = CREATE_COLUM_NAME;
-            output.updatedAt = UPDATE_COLUM_NAME;
+            output.createdAt = 'created_at';
+            output.updatedAt = 'updated_at';
             if (options.softdelete)
                 output.deletedAt = DELETE_COLUM_NAME;
         } else {
@@ -116,7 +126,7 @@ class DatabaseObject {
         return output;
     }
 
-    parseFKandPK(options, parts) {
+    parseFKandPK(tablename, options, parts) {
         if (options && options.PK) {
             parts += ', PRIMARY KEY (' + options.PK + ')';
         }

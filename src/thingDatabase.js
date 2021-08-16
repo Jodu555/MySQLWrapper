@@ -1,13 +1,17 @@
 const { queryPartGeneration } = require('./generationUtils');
 class thingDatabase {
-	constructor(table_name, database, connection) {
+	constructor(table_name, options, database, connection) {
 		this.table_name = table_name;
+		this.options = options;
 		this.database = database;
 		this.connection = connection;
 		console.log(this.table_name + ' Database Initialized');
 	}
 
 	create(thing) {
+		if (options.timestamps) {
+
+		}
 		const len = Object.keys(thing).length;
 		const values = [];
 		let partsQuery = '(';
