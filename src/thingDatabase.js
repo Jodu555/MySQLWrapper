@@ -9,8 +9,15 @@ class thingDatabase {
 	}
 
 	create(thing) {
-		if (options.timestamps) {
-
+		const timestamps = this.options.timestamps;
+		if (this.options && timestamps) {
+			console.log(thing);
+			console.log(timestamps);
+			Object.keys(timestamps).forEach(key => {
+				thing[timestamps[key]] = true;
+			});
+			if (thing.created_at) thing.created_at = Date.now()
+			if (thing.updated_at) thing.updated_at = Date.now()
 		}
 		const len = Object.keys(thing).length;
 		const values = [];
@@ -42,6 +49,11 @@ class thingDatabase {
 	}
 
 	async update(search, thing) {
+		if (this.options && this.options.timestamps) {
+			if (this.options.timestamps.updatedAt) {
+				thing.updated_at = Date.now();
+			}
+		}
 		try {
 			if (!Object.keys(thing).length > 0) {
 				throw new Error('Invalid thing update Object');
@@ -105,6 +117,10 @@ class thingDatabase {
 	}
 
 	async delete(search) {
+		if (this.options && this.options.softdelete && this.options.timestamps && this.options.timestamps.deletedAt) {
+			await this.update(search, { deleted_at: Date.now() });
+			return;
+		}
 		let query = 'DELETE FROM ' + this.table_name + ' WHERE ';
 		const part = queryPartGeneration(search);
 		query += part.query;
