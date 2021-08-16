@@ -11,10 +11,13 @@ class thingDatabase {
 	create(thing) {
 		const timestamps = this.options.timestamps;
 		if (this.options && timestamps) {
-			console.log(thing);
-			console.log(timestamps);
 			Object.keys(timestamps).forEach(key => {
-				thing[timestamps[key]] = true;
+				if (timestamps[key] !== 'deleted_at') {
+					thing[timestamps[key]] = true;
+				} else {
+					thing[timestamps[key]] = false;
+				}
+
 			});
 			if (thing.created_at) thing.created_at = Date.now()
 			if (thing.updated_at) thing.updated_at = Date.now()
@@ -46,6 +49,7 @@ class thingDatabase {
 				this.create(thing);
 			}
 		});
+		return thing;
 	}
 
 	async update(search, thing) {

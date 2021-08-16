@@ -64,6 +64,7 @@ database. //some other function like get('tablename')
 ### Create an Entry in a Table 
 
 ```javascript
+//Retunrs the created Entry
 database.get('tablename').create({
     columName: 'columValue',
 });

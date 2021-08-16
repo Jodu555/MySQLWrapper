@@ -53,7 +53,8 @@ class DatabaseObject {
     createTable(tablename, table) {
         const stamps = new Map([
             ['createdAt', 'created_at'],
-            ['updatedAt', 'updated_at']
+            ['updatedAt', 'updated_at'],
+            ['deletedAt', 'deleted_at']
         ]);
         const tablecopy = JSON.parse(JSON.stringify(table));
         const options = table.options;
