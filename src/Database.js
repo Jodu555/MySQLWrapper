@@ -51,13 +51,13 @@ class DatabaseObject {
     }
 
     createTable(tablename, table) {
-        const CREATE_COLUM_NAME = 'created_at';
-        const UPDATE_COLUM_NAME = 'updated_at';
-        const DELETE_COLUM_NAME = 'deleted_at';
+
 
         const tablecopy = JSON.parse(JSON.stringify(table));
         const options = table.options;
         delete table.options;
+
+
 
         let i = 0, parts = '', max = Object.keys(table).length;
         Object.keys(table).forEach(name => {
@@ -87,6 +87,34 @@ class DatabaseObject {
             };
         });
         this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, this, this.connection) })
+    }
+
+    parseTimeStamps(options) {
+        const CREATE_COLUM_NAME = 'created_at';
+        const UPDATE_COLUM_NAME = 'updated_at';
+        const DELETE_COLUM_NAME = 'deleted_at';
+
+        const stamps = new Map();
+        stamps.set(timestamps.createdAt, CREATE_COLUM_NAME)
+
+        let output = {};
+        const timestamps = options.timestamps;
+        if (typeof timestamps === 'boolean') {
+            output.createdAt = CREATE_COLUM_NAME;
+            output.updatedAt = UPDATE_COLUM_NAME;
+            if (options.softdelete)
+                output.deletedAt = DELETE_COLUM_NAME;
+        } else {
+            stamps.forEach((value, key) => (typeof timestamps[key] === 'boolean' && timestamps[key]) ? output[key] = value : '');
+            if (options.softdelete && typeof timestamps.deletedAt === 'boolean' && timestamps.deletedAt) {
+                output.deletedAt = DELETE_COLUM_NAME;
+            }
+            stamps.forEach((value, key) => (typeof timestamps[key] === 'string') ? output[key] = value : '');
+            if (options.softdelete && typeof timestamps.deletedAt === 'string') {
+                output.deletedAt = timestamps.deletedAt;
+            }
+        }
+        return output;
     }
 
     parseFKandPK(options, parts) {
