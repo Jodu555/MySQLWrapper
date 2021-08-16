@@ -51,6 +51,10 @@ class DatabaseObject {
     }
 
     createTable(tablename, table) {
+        const CREATE_COLUM_NAME = 'created_at';
+        const UPDATE_COLUM_NAME = 'updated_at';
+        const DELETE_COLUM_NAME = 'deleted_at';
+
         const tablecopy = JSON.parse(JSON.stringify(table));
         const options = table.options;
         delete table.options;
@@ -67,6 +71,25 @@ class DatabaseObject {
             if (max !== i) parts += ', ';
         });
 
+        parse = parseFKandPK(options, parts);
+
+
+        let sql = 'CREATE TABLE IF NOT EXISTS ' + tablename + ' (' + parts + ')';
+        this.connection.query(sql, (error, results, fields) => {
+            if (error) throw error;
+        });
+        Object.keys(tablecopy).forEach(name => {
+            if (typeof tablecopy[name] === 'string') {
+                tablecopy[name] = {
+                    type: tablecopy[name],
+                    null: false
+                };
+            };
+        });
+        this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, this, this.connection) })
+    }
+
+    parseFKandPK(options, parts) {
         if (options && options.PK) {
             parts += ', PRIMARY KEY (' + options.PK + ')';
         }
@@ -84,20 +107,7 @@ class DatabaseObject {
 
             });
         };
-
-        let sql = 'CREATE TABLE IF NOT EXISTS ' + tablename + ' (' + parts + ')';
-        this.connection.query(sql, (error, results, fields) => {
-            if (error) throw error;
-        });
-        Object.keys(tablecopy).forEach(name => {
-            if (typeof tablecopy[name] === 'string') {
-                tablecopy[name] = {
-                    type: tablecopy[name],
-                    null: false
-                };
-            };
-        });
-        this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, this, this.connection) })
+        return parts;
     }
 
     get(name) {
