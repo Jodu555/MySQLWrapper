@@ -140,8 +140,8 @@ await database.get('tablename').delete({
 
 ## Todos
 
-* [ ] Add possibility to createTable to auto implement the timestamps created_AT / updated_AT
-* [ ] Add the possibility to activate softdelete and add in the timestamps
+* [x] Add possibility to createTable to auto implement the timestamps created_AT / updated_AT
+* [x] Add the possibility to activate softdelete and add in the timestamps
 * [ ] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
 
