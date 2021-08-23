@@ -11,6 +11,7 @@ class DatabaseObject {
         this.database = database;
         this.connection = null;
         this.tables = new Map();
+        this.callbacks = new Map();
         this.validators = {
             string: ['VARCHAR', 'TEXT', 'BLOB'],
             number: ['BIT', 'INT', 'FLOAT', 'DOUBLE']
@@ -48,6 +49,45 @@ class DatabaseObject {
     reconnect() {
         this.disconnect();
         this.connect();
+    }
+
+    setCallback(identifier, cb) {
+        /**
+          Identifiers:
+            tablename-ACTION : On a Specific Table a specific Action
+            *-ACTION : On Any Table a specific Action
+            *-* : On any Table any Action
+        */
+        this.callbacks.set(identifier, cb);
+    }
+
+    callCallback(tablename, action, data) {
+        const callbacks = callbackToFunctions(tablename, action).filter(v => typeof v == 'function');
+        callbacks.forEach(callback => {
+            callback(data)
+        });
+    }
+
+    callbackToFunctions(tablename, action) {
+        if (!tablename || !action) {
+            return [];
+        }
+        const possibles = [];
+        possibles.push(callbacks.get('*-*'));
+        possibles.push(callbacks.get('*-' + action));
+        possibles.push(callbacks.get(tablename + '-*'));
+        possibles.push(callbacks.get(tablename + '-' + action));
+
+        const otherArrays = [];
+        const possiblesCleaned = possibles.map(v => {
+            if (!Array.isArray(v))
+                return v;
+            otherArrays.push(v);
+            return undefined;
+        }).filter(v => typeof v !== 'undefined');
+        var merged = [].concat.apply([], otherArrays);
+        const output = merged.concat(possiblesCleaned);
+        return output;
     }
 
     createTable(tablename, table) {
