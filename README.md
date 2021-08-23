@@ -142,6 +142,8 @@ await database.get('tablename').delete({
 
 * [x] Add possibility to createTable to auto implement the timestamps created_AT / updated_AT
 * [x] Add the possibility to activate softdelete and add in the timestamps
+* [ ] Add the possibility to create indexes in tables
+* [ ] Add the possibility to set callback functions for databse actions
 * [ ] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
 
