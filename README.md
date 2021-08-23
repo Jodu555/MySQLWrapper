@@ -30,13 +30,17 @@ database.createTable('tablename', {
 });
 ```
 
-### Create a Table with Foreign Keys
+### Create a Table with Foreign Keys & Indexes
 #### This Means that to the colum user_UUID will created an FK to the table users in the colum UUID
+### The K means that the columen name gets an index
 
 ```javascript
 database.createTable('services', {
     options: {
         PK: 'UUID',
+        K: [
+            'name'
+        ]
         FK: {
             'user_UUID': 'users/UUID',
         },
@@ -142,7 +146,7 @@ await database.get('tablename').delete({
 
 * [x] Add possibility to createTable to auto implement the timestamps created_AT / updated_AT
 * [x] Add the possibility to activate softdelete and add in the timestamps
-* [ ] Add the possibility to create indexes in tables
+* [x] Add the possibility to create indexes in tables
 * [ ] Add the possibility to set callback functions for databse actions
 * [ ] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation

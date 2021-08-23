@@ -82,7 +82,7 @@ class DatabaseObject {
             if (max !== i) parts += ', ';
         });
 
-        parts = this.parseFKandPK(tablename, options, parts);
+        parts = this.parseFKandPKandK(tablename, options, parts);
 
 
         let sql = 'CREATE TABLE IF NOT EXISTS ' + tablename + ' (' + parts + ')';
@@ -127,9 +127,15 @@ class DatabaseObject {
         return output;
     }
 
-    parseFKandPK(tablename, options, parts) {
+    parseFKandPKandK(tablename, options, parts) {
         if (options && options.PK) {
             parts += ', PRIMARY KEY (' + options.PK + ')';
+        }
+        if (options && options.K) {
+            options.K.forEach(key => {
+                parts += ', ';
+                parts += 'INDEX ' + key.toUpperCase() + ' (' + key + ')';
+            });
         }
         if (options && options.FK) {
             let i = 0;
