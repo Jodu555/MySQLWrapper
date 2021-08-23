@@ -53,6 +53,7 @@ class DatabaseObject {
 
     setCallback(identifier, cb) {
         /**
+         *ACTION: CREATE / GET / GETONE / UPDATE / DELETE
           Identifiers:
             tablename-ACTION : On a Specific Table a specific Action
             *-ACTION : On Any Table a specific Action
@@ -62,9 +63,14 @@ class DatabaseObject {
     }
 
     callCallback(tablename, action, data) {
-        const callbacks = callbackToFunctions(tablename, action).filter(v => typeof v == 'function');
-        callbacks.forEach(callback => {
-            callback(data)
+        const cbs = this.callbackToFunctions(tablename, action).filter(v => typeof v == 'function');
+        console.log('Tried to call callback ' + cbs.join(', '));
+        cbs.forEach(callback => {
+            callback({
+                tablename,
+                action,
+                data
+            })
         });
     }
 
@@ -73,10 +79,10 @@ class DatabaseObject {
             return [];
         }
         const possibles = [];
-        possibles.push(callbacks.get('*-*'));
-        possibles.push(callbacks.get('*-' + action));
-        possibles.push(callbacks.get(tablename + '-*'));
-        possibles.push(callbacks.get(tablename + '-' + action));
+        possibles.push(this.callbacks.get('*-*'));
+        possibles.push(this.callbacks.get('*-' + action));
+        possibles.push(this.callbacks.get(tablename + '-*'));
+        possibles.push(this.callbacks.get(tablename + '-' + action));
 
         const otherArrays = [];
         const possiblesCleaned = possibles.map(v => {

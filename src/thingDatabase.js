@@ -46,6 +46,7 @@ class thingDatabase {
 				this.create(thing);
 			}
 		});
+		this.database.callCallback(this.table_name, 'CREATE', thing);
 		return thing;
 	}
 
@@ -77,6 +78,7 @@ class thingDatabase {
 					this.update(search, thing);
 				}
 			});
+			this.database.callCallback(this.table_name, 'UPDATE', { search, thing })
 			return await this.get(search);
 		} catch (error) {
 			const errormsg = `${this.name} Update Failed: searchTerm: ${JSON.stringify(
@@ -88,6 +90,7 @@ class thingDatabase {
 
 	async getOne(search) {
 		const result = await this.get(search);
+		this.database.callCallback(this.table_name, 'GETONE', search);
 		return result[0];
 	}
 
@@ -100,7 +103,7 @@ class thingDatabase {
 		if (Object.keys(search) == 0) {
 			query = 'SELECT * FROM ' + this.table_name;
 		}
-
+		this.database.callCallback(this.table_name, 'GET', search);
 		return new Promise(async (resolve, reject) => {
 			await this.connection.query(query, values, async (error, results, fields) => {
 				const data = [];
@@ -135,6 +138,7 @@ class thingDatabase {
 				this.delete(search);
 			}
 		});
+		this.database.callCallback(this.table_name, 'DELETE', search);
 	}
 }
 
