@@ -142,6 +142,7 @@ await database.get('tablename').delete({
 
 * [Monitoring-System](https://github.com/Jodu555/MonitoringSystem-Core)
 * [AmazonPriceTracker](https://github.com/Jodu555/AmazonPriceTracker)
+* [YouTube-ChatBot](https://github.com/Jodu555/YouTube-ChatBot)
 
 ## Todos
 

@@ -204,7 +204,9 @@ class DatabaseObject {
         if (this.tables.has(name))
             return this.tables.get(name).database;
         console.log('You tried to access a Table wich is not configured yet! Deprecation Notice!');
-        return new thingDatabase(name, {}, this, this.connection)
+        const thingDatabase = new thingDatabase(name, {}, this, this.connection);
+        this.tables.set(name, thingDatabase);
+        return thingDatabase;
     }
 
     validate(tablename, obj) {
