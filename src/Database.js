@@ -64,7 +64,7 @@ class DatabaseObject {
 
     callCallback(tablename, action, data) {
         const cbs = this.callbackToFunctions(tablename, action).filter(v => typeof v == 'function');
-        console.log('Tried to call callback ' + cbs.join(', '));
+        // console.log('Tried to call callback ' + cbs.join(', '));
         cbs.forEach(callback => {
             callback({
                 tablename,
