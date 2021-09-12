@@ -205,8 +205,8 @@ class DatabaseObject {
             return this.tables.get(name).database;
         console.log('You tried to access a Table wich is not configured yet! Deprecation Notice!');
         const newThingDatabase = new thingDatabase(name, {}, this, this.connection);
-        this.tables.set(name, newThingDatabase);
-        return newThingDatabase;
+        this.tables.set(name, { table: { error: 'The Table was not created from the API' }, database: newThingDatabase });
+        return this.get(name);
     }
 
     validate(tablename, obj) {
