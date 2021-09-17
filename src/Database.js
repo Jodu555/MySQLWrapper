@@ -109,10 +109,11 @@ class DatabaseObject {
         if (options && options.timestamps) {
             options.timestamps = this.parseTimeStamps(options);
             stamps.forEach((value, key) => {
-                table[value] = {
-                    type: 'varchar(64)',
-                    null: false
-                };
+                if (options.timestamps[key])
+                    table[value] = {
+                        type: 'varchar(64)',
+                        null: false
+                    };
             });
         }
 
@@ -143,6 +144,7 @@ class DatabaseObject {
                 };
             };
         });
+
         this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, options, this, this.connection) })
     }
 
