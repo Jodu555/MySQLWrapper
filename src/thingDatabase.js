@@ -140,6 +140,19 @@ class thingDatabase {
 		});
 		this.database.callCallback(this.table_name, 'DELETE', search);
 	}
+
+	async getLatest(action, search) {
+		const stampsDict = new Map([
+			['inserted', this.options.createdAt]
+			['updated', this.options.updatedAt]
+			['deleted', this.options.deletedAt]
+		]);
+		if (stampsDict.has(action.toLowerCase())) {
+
+		} else {
+			console.log('The Action ' + action + 'is not defined! Use: inserted, updated or deleted');
+		}
+	}
 }
 
 module.exports = thingDatabase;
