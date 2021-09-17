@@ -95,13 +95,13 @@ class thingDatabase {
 	}
 
 	async get(search) {
-		let query = 'SELECT * FROM ' + this.table_name + ' WHERE ';
-		const part = queryPartGeneration(search);
-		query += part.query;
-		const values = part.values;
-
-		if (Object.keys(search) == 0) {
-			query = 'SELECT * FROM ' + this.table_name;
+		let query = 'SELECT * FROM ' + this.table_name;
+		let values;
+		if (search) {
+			let query = 'SELECT * FROM ' + this.table_name + ' WHERE ';
+			const part = queryPartGeneration(search);
+			query += part.query;
+			values = part.values;
 		}
 		this.database.callCallback(this.table_name, 'GET', search);
 		return new Promise(async (resolve, reject) => {
@@ -143,12 +143,35 @@ class thingDatabase {
 
 	async getLatest(action, search) {
 		const stampsDict = new Map([
-			['inserted', this.options.createdAt]
-			['updated', this.options.updatedAt]
-			['deleted', this.options.deletedAt]
+			['inserted', this.options.timestamps.createdAt],
+			['updated', this.options.timestamps.updatedAt],
+			['deleted', this.options.timestamps.deletedAt],
 		]);
 		if (stampsDict.has(action.toLowerCase())) {
-
+			const timeRow = stampsDict.get(action.toLowerCase());
+			if (timeRow) {
+				let query = 'SELECT * FROM ' + this.table_name;
+				let values;
+				if (search) {
+					let query = 'SELECT * FROM ' + this.table_name + ' WHERE ';
+					const part = queryPartGeneration(search);
+					query += part.query;
+					values = part.values;
+				}
+				query += ' ORDER BY ' + timeRow + ' DESC LIMIT 1';
+				return new Promise(async (resolve, reject) => {
+					await this.connection.query(query, values, async (error, results, fields) => {
+						if (error)
+							throw error;
+						if (results.length == 0) resolve(null);
+						await results.forEach((result) => {
+							resolve(result);
+						});
+					});
+				});
+			} else {
+				console.log('You dont specified a timestamp in the table options for ' + action);
+			}
 		} else {
 			console.log('The Action ' + action + 'is not defined! Use: inserted, updated or deleted');
 		}
