@@ -150,7 +150,7 @@ await database.get('tablename').delete({
 * [x] Add the possibility to activate softdelete and add in the timestamps
 * [x] Add the possibility to create indexes in tables
 * [ ] Add the possibility to set callback functions for databse actions
-* [ ] Add a function to get the latest one
+* [ ] Add a function to get the latest one!!
 * [ ] Add the possibility to order a get statement
 * [ ] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
