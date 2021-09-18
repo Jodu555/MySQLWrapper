@@ -21,11 +21,8 @@ function queryPartGeneration(object) {
 }
 
 function removeKeyFromObject(obj, removeKey) {
-    const keys = Object.keys(obj);
-    keys.forEach((key) => {
-        if (key.toLowerCase() == removeKey.toLowerCase()) {
-            delete obj[key];
-        }
+    Object.keys(obj).forEach(key => {
+        (key.toLowerCase() == removeKey.toLowerCase()) && delete obj[key];
     });
 }
 
