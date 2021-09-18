@@ -138,6 +138,16 @@ await database.get('tablename').delete({
     });
 ```
 
+### Get Latest Entry by inseted / updated / deleted 
+
+```javascript
+//Returns the latest inseted / updated / deleted row
+
+await database.get('tablename').getLatest('inserted');
+await database.get('tablename').getLatest('updated');
+await database.get('tablename').getLatest('deleted');
+```
+
 ## Projects using this API
 
 * [Monitoring-System](https://github.com/Jodu555/MonitoringSystem-Core)
@@ -150,7 +160,7 @@ await database.get('tablename').delete({
 * [x] Add the possibility to activate softdelete and add in the timestamps
 * [x] Add the possibility to create indexes in tables
 * [ ] Add the possibility to set callback functions for databse actions
-* [ ] Add a function to get the latest one!!
+* [x] Add a function to get the latest one!!
 * [ ] Add the possibility to order a get statement
 * [ ] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
