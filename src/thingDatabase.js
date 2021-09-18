@@ -153,12 +153,13 @@ class thingDatabase {
 				let query = 'SELECT * FROM ' + this.table_name;
 				let values;
 				if (search) {
-					let query = 'SELECT * FROM ' + this.table_name + ' WHERE ';
+					query = 'SELECT * FROM ' + this.table_name + ' WHERE ';
 					const part = queryPartGeneration(search);
 					query += part.query;
 					values = part.values;
 				}
 				query += ' ORDER BY ' + timeRow + ' DESC LIMIT 1';
+				console.log(query);
 				return new Promise(async (resolve, reject) => {
 					await this.connection.query(query, values, async (error, results, fields) => {
 						if (error)
