@@ -59,7 +59,15 @@ class DatabaseObject {
             *-ACTION : On Any Table a specific Action
             *-* : On any Table any Action
         */
-        this.callbacks.set(identifier, cb);
+        if (this.callbacks.has(identifier)) {
+            if (Array.isArray(this.callbacks.get(identifier))) {
+                this.callbacks.get(identifier).push(cb);
+            } else {
+                this.callbacks.set(identifier, [this.callbacks.get(identifier), cb]);
+            }
+        } else {
+            this.callbacks.set(identifier, cb);
+        }
     }
 
     callCallback(tablename, action, data) {
@@ -84,15 +92,15 @@ class DatabaseObject {
         possibles.push(this.callbacks.get(tablename + '-*'));
         possibles.push(this.callbacks.get(tablename + '-' + action));
 
-        const otherArrays = [];
-        const possiblesCleaned = possibles.map(v => {
-            if (!Array.isArray(v))
-                return v;
-            otherArrays.push(v);
-            return undefined;
-        }).filter(v => typeof v !== 'undefined');
-        var merged = [].concat.apply([], otherArrays);
-        const output = merged.concat(possiblesCleaned);
+        let output = [];
+        possibles.forEach(elem => {
+            if (Array.isArray(elem)) {
+                output = output.concat(elem);
+            } else {
+                output.push(elem);
+            }
+        });
+        output = output.filter(v => typeof v !== 'undefined');
         return output;
     }
 
