@@ -94,11 +94,8 @@ class DatabaseObject {
 
         let output = [];
         possibles.forEach(elem => {
-            if (Array.isArray(elem)) {
-                output = output.concat(elem);
-            } else {
-                output.push(elem);
-            }
+            Array.isArray(elem) && (output = output.concat(elem));
+            !Array.isArray(elem) && output.push(elem);
         });
         output = output.filter(v => typeof v !== 'undefined');
         return output;
