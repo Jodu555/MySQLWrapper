@@ -159,7 +159,7 @@ class thingDatabase {
 					values = part.values;
 				}
 				query += ' ORDER BY ' + timeRow + ' DESC LIMIT 1';
-				console.log(query);
+				this.database.callCallback(this.table_name, 'LATEST', { action, search });
 				return new Promise(async (resolve, reject) => {
 					await this.connection.query(query, values, async (error, results, fields) => {
 						if (error)
