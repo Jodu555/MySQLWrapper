@@ -143,9 +143,16 @@ await database.get('tablename').delete({
 ```javascript
 //Returns the latest inseted / updated / deleted row
 
+//Gets the general latest
 await database.get('tablename').getLatest('inserted');
 await database.get('tablename').getLatest('updated');
 await database.get('tablename').getLatest('deleted');
+
+//Gets the latest by a specific search
+await database.get('tablename').getLatest('type', {
+        searchColumName: 'searchColumValue'
+    });
+
 ```
 
 ## Projects using this API
