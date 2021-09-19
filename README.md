@@ -155,6 +155,23 @@ await database.get('tablename').getLatest('type', {
 
 ```
 
+### Database action callback usage
+
+```javascript
+/**
+ * IDENTIFIER Building:
+    ACTION: CREATE / GET / GETONE / UPDATE / DELETE / LATEST
+    Identifiers:
+        tablename-ACTION : On a Specific Table a specific Action
+        *-ACTION : On Any Table a specific Action
+        *-* : On any Table any Action
+*/
+
+database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
+    //Here you can log the data or do whatever you want to do
+});
+```
+
 ## Projects using this API
 
 * [Monitoring-System](https://github.com/Jodu555/MonitoringSystem-Core)
@@ -166,7 +183,7 @@ await database.get('tablename').getLatest('type', {
 * [x] Add possibility to createTable to auto implement the timestamps created_AT / updated_AT
 * [x] Add the possibility to activate softdelete and add in the timestamps
 * [x] Add the possibility to create indexes in tables
-* [ ] Add the possibility to set callback functions for databse actions
+* [x] Add the possibility to set callback functions for databse actions
 * [x] Add a function to get the latest one!!
 * [ ] Add the possibility to order a get statement
 * [ ] Validate if the Validation works just fine

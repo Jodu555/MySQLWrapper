@@ -53,7 +53,7 @@ class DatabaseObject {
 
     setCallback(identifier, cb) {
         /**
-         *ACTION: CREATE / GET / GETONE / UPDATE / DELETE
+         *ACTION: CREATE / GET / GETONE / UPDATE / DELETE / Latest
           Identifiers:
             tablename-ACTION : On a Specific Table a specific Action
             *-ACTION : On Any Table a specific Action
