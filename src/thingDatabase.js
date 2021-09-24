@@ -98,7 +98,7 @@ class thingDatabase {
 		let query = 'SELECT * FROM ' + this.table_name;
 		let values;
 		if (search) {
-			let query = 'SELECT * FROM ' + this.table_name + ' WHERE ';
+			query = 'SELECT * FROM ' + this.table_name + ' WHERE ';
 			const part = queryPartGeneration(search);
 			query += part.query;
 			values = part.values;
