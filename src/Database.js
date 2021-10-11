@@ -217,21 +217,26 @@ class DatabaseObject {
     }
 
     validate(tablename, obj) {
-        const table = this.tables.get(tablename).table, errors = [], options = table.options;
+        const table = this.tables.get(tablename).table,
+            errors = [],
+            options = table.options;
         delete table.options;
 
         Object.keys(table).forEach(name => {
-            const value = obj[name], definition = table[name], parse = definition.parse;
+            const value = obj[name],
+                definition = table[name],
+                parse = definition.parse;
 
-            //Check if exists
+            //Check if exists and is required
             if (!value) {
-                errors.push('Missing: ' + name)
+                if (parse.required)
+                    errors.push('Missing: ' + name)
                 return;
             }
 
             //Check if is right type 
             Object.keys(this.validators).forEach(validator => {
-                if (new RegExp(this.validators[validator].join("|")).test(definition.type) && typeof value !== validator) {
+                if (new RegExp(this.validators[validator].join("|")).test(definition.type.toUpperCase()) && typeof value !== validator) {
                     errors.push('Invalid value: ' + name + ' expected: ' + validator + '! But became: ' + typeof value);
                     return;
                 }
@@ -240,16 +245,17 @@ class DatabaseObject {
             //Check if parse is matching
             if (parse) {
 
+                let len = typeof value === 'string' ? value.length : value;
                 //Check for min max parsing
-                if (parse.min || parse.max) {
-                    parse.min = parse.min && parse.min > 0 ? parse.min : 1
-                    parse.max = parse.max && parse.max >= parse.min ? parse.max : parse.min * 2;
-                    if (parse.min && parse.max) {
-                        let len = typeof value === 'string' ? value.length : value;
-                        if (!(len >= parse.min && len <= parse.max)) {
-                            errors.push('Parsing Error: ' + name + " Parse: " + JSON.stringify(parse));
-                            return;
-                        }
+                if (parse.min && parse.max) {
+                    if (!(len >= parse.min && len <= parse.max)) {
+                        errors.push('Parsing Error: ' + name + " Parse: " + JSON.stringify(parse));
+                        return;
+                    }
+                } else if (parse.max || parse.min) {
+                    if ((len >= parse.min) || (len <= parse.max)) {
+                        errors.push('Parsing Error: ' + name + " Parse: " + JSON.stringify(parse));
+                        return;
                     }
                 }
 
