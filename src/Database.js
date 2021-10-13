@@ -222,6 +222,10 @@ class DatabaseObject {
             options = table.options;
         delete table.options;
 
+        if (table.error) {
+            return 'Validation Error: ' + tablename + ' : ' + table.error;
+        }
+
         Object.keys(table).forEach(name => {
             const value = obj[name],
                 definition = table[name],
