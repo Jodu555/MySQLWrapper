@@ -97,7 +97,7 @@ class thingDatabase {
 	async get(search) {
 		let query = 'SELECT * FROM ' + this.table_name;
 		let values;
-		if (search) {
+		if (search && Object.keys(search).length > 0) {
 			query = 'SELECT * FROM ' + this.table_name + ' WHERE ';
 			const part = queryPartGeneration(search);
 			query += part.query;
