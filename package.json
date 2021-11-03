@@ -1,33 +1,33 @@
 {
-  "name": "@jodu555/mysqlapi",
-  "version": "3.3.9",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js ",
-    "dev": "nodemon src/index.js "
-  },
-  "keywords": [
-    "mysql API",
-    "mysql",
-    "mysql wrapper",
-    "wrapper",
-    "api"
-  ],
-  "author": "Jodu555",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Jodu555/MySQLWrapper"
-  },
-  "bugs": {
-    "url": "https://github.com/Jodu555/MySQLWrapper/issues",
-    "email": "Jodu505@gmail.com"
-  },
-  "dependencies": {
-    "mysql": "^2.18.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.12"
-  }
+	"name": "@jodu555/mysqlapi",
+	"version": "3.4.0",
+	"description": "",
+	"main": "src/index.js",
+	"scripts": {
+		"start": "node src/index.js ",
+		"dev": "nodemon src/index.js "
+	},
+	"keywords": [
+		"mysql API",
+		"mysql",
+		"mysql wrapper",
+		"wrapper",
+		"api"
+	],
+	"author": "Jodu555",
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Jodu555/MySQLWrapper"
+	},
+	"bugs": {
+		"url": "https://github.com/Jodu555/MySQLWrapper/issues",
+		"email": "Jodu505@gmail.com"
+	},
+	"dependencies": {
+		"mysql": "^2.18.1"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.12"
+	}
 }
