@@ -8,6 +8,8 @@ An NodeJS mysql wrapper to convert objects to the full query String! Nice to sim
   * Create Database Entrys
   * Update Database Entrys
   * Delete Database Entrys
+  * Helps you on handling with timestamps
+  * Provides an set of callbacks to may log the infos
 
 ## Usage
 
@@ -177,6 +179,7 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 * [Monitoring-System](https://github.com/Jodu555/MonitoringSystem-Core)
 * [AmazonPriceTracker](https://github.com/Jodu555/AmazonPriceTracker)
 * [YouTube-ChatBot](https://github.com/Jodu555/YouTube-ChatBot)
+* [Ez-Uploader](https://ez-uploader.de)
 
 ## Todos
 
