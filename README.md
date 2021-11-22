@@ -189,6 +189,8 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 * [x] Add the possibility to set callback functions for databse actions
 * [x] Add a function to get the latest one!!
 * [ ] Add the possibility to order a get statement
+* [ ] ReEngineer the validation
+* [ ] Add a direct memory implemented caching system
 * [ ] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
 
