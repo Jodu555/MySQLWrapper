@@ -59,6 +59,18 @@ class Schema {
                 }
             }
 
+            if (this.options && this.options.even && Array.isArray(this.options.even)) {
+
+                //Even Parsing
+                this.options.even.forEach(even => {
+                    const def = even.split('/')[0],
+                        should = even.split('/')[1];
+                    if (def == name && obj[should] && value !== obj[should])
+                        errors.push('The: \'' + name + '\' value should be equal to the \'' + should + '\' value!');
+
+                });
+            }
+
         });
         return { success: errors.length == 0, errors, object: obj };
     }
