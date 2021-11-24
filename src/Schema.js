@@ -15,6 +15,18 @@ class Schema {
             let value = obj[name],
                 parse = this.schema[name];
 
+            //Add Default Values
+            if (parse.default && !value) {
+                value = parse.default;
+                obj[name] = parse.default;
+            }
+
+            //Check if exists and is required
+            if (!value) {
+                if (parse.required)
+                    errors.push('Missing: ' + name)
+                return;
+            }
 
         });
         return { success: errors.length == 0, errors, object: obj };
