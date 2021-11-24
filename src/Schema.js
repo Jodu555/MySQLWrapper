@@ -47,7 +47,7 @@ class Schema {
                     }
                 }
 
-
+                errors.push(...this.parseMinMax(name, value, parse))
 
                 //Check For e-Mail Parsing
                 if (parse.email) {
@@ -73,6 +73,19 @@ class Schema {
 
         });
         return { success: errors.length == 0, errors, object: obj };
+    }
+
+    parseMinMax(name, value, parse) {
+        const errors = [];
+        let len = typeof value === 'string' ? value.length : value;
+        //Check for min max parsing
+        if (parse.min && !(len >= parse.min)) {
+            errors.push('Parsing Error: ' + name + ' Must have at least ' + parse.min + ' Characters/Numbers! It has ' + len);
+        }
+        if (parse.max && !(len <= parse.max)) {
+            errors.push('Parsing Error: ' + name + ' Must have under ' + parse.max + ' Characters/Numbers! It has ' + len);
+        }
+        return errors;
     }
 
 }
