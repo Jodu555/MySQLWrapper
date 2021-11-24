@@ -46,6 +46,17 @@ class Schema {
                         return;
                     }
                 }
+
+
+
+                //Check For e-Mail Parsing
+                if (parse.email) {
+                    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    if (!re.test(String(value).toLowerCase())) {
+                        errors.push('Parsing Error: ' + name + " Expected: E-Mail");
+                        return;
+                    }
+                }
             }
 
         });
