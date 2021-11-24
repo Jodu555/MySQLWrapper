@@ -1,3 +1,29 @@
+const testSchema = {
+    options: {
+        xor: ['username/email'],
+        even: ['password/repeatPassword']
+    },
+    username: {
+        required: true,
+        anum: true,
+        min: 5, //Included
+        max: 10, //Included
+        default: 'Anonymous'
+    },
+    email: {
+        required: true,
+        email: true
+    },
+    password: {
+        required: true,
+        min: 3
+    },
+    repeatPassword: {
+        required: true,
+        min: 3
+    }
+};
+
 class Schema {
     constructor(schema) {
         this.options = schema.options;
