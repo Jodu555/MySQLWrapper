@@ -37,6 +37,17 @@ class Schema {
                     }
                 });
 
+            //Check if parse is matching
+            if (parse) {
+                if (parse.anum) {
+                    const regex = new RegExp(/^[a-zA-Z0-9]+$/);
+                    if (!regex.test(value)) {
+                        errors.push('Parsing Error: ' + name + " should be alpha numerical!")
+                        return;
+                    }
+                }
+            }
+
         });
         return { success: errors.length == 0, errors, object: obj };
     }
