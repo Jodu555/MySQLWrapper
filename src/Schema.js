@@ -67,7 +67,6 @@ class Schema {
                         should = even.split('/')[1];
                     if (def == name && obj[should] && value !== obj[should])
                         errors.push('The: \'' + name + '\' value should be equal to the \'' + should + '\' value!');
-
                 });
             }
 
