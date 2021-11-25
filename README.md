@@ -196,6 +196,9 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 * [ ] Add a direct memory implemented caching system
 * [ ] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
+* [ ] Schema Thing
+    * [ ] Immutable values
+    * [ ] Virtual Variables
 
 
 
