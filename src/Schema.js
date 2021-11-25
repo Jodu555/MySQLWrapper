@@ -43,8 +43,12 @@ class Schema {
 
             //Add Default Values
             if (parse.default && !value) {
-                value = parse.default;
-                obj[name] = parse.default;
+                if (typeof parse.default == 'function') {
+                    value = parse.default();
+                } else {
+                    value = parse.default;
+                }
+                obj[name] = value;
             }
 
             //Check if exists and is required
@@ -97,7 +101,13 @@ class Schema {
             }
 
         });
-        return { success: errors.length == 0, errors, object: obj };
+        const returnObject = {
+            success: errors.length == 0,
+            errors,
+        }
+        if (returnObject.success)
+            returnObject.object = obj;
+        return returnObject;
     }
 
     parseMinMax(name, value, parse) {
@@ -114,3 +124,5 @@ class Schema {
     }
 
 }
+
+module.exports = Schema;
