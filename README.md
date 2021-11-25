@@ -199,6 +199,7 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 * [ ] Schema Thing
     * [ ] Immutable values
     * [ ] Virtual Variables
+    * [ ] Accept a anonymous function for the default value
 
 
 
