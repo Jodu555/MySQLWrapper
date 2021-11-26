@@ -1,6 +1,7 @@
 let database = null;
 const mysql = require('mysql');
 const thingDatabase = require('./thingDatabase')
+const Cache = require('./Cache');
 
 class DatabaseObject {
 
@@ -12,6 +13,7 @@ class DatabaseObject {
         this.connection = null;
         this.tables = new Map();
         this.callbacks = new Map();
+        this.caches = new Map();
         this.validators = {
             string: ['VARCHAR', 'TEXT', 'BLOB'],
             number: ['BIT', 'INT', 'FLOAT', 'DOUBLE']
@@ -284,6 +286,10 @@ class DatabaseObject {
             }
         });
         return errors;
+    }
+
+    registerCache(name, settings, cb) {
+        this.caches.set(name, new Cache(name, settings, cb));
     }
 
 }
