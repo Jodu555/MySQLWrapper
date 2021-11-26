@@ -28,7 +28,11 @@ class Cache {
             if (data && (data.calls <= this.calls)) {
                 //Persist
                 data.calls++;
-                returnObject = { ...returnObject, ...data, cached: true }
+                if (returnObject && !returnObject.cached) {
+                    returnObject = { ...returnObject, ...data, cached: false };
+                } else {
+                    returnObject = { ...returnObject, ...data, cached: true };
+                }
             } else {
                 //Change
                 const result = await this.cb(...params);
@@ -39,7 +43,12 @@ class Cache {
         if (this.cacheTime) {
             if (data && (data.cacheTime >= Date.now())) {
                 //Persist
-                returnObject = { ...returnObject, ...data, cached: true };
+                if (returnObject && !returnObject.cached) {
+                    returnObject = { ...returnObject, ...data, cached: false };
+                } else {
+                    returnObject = { ...returnObject, ...data, cached: true };
+                }
+
             } else {
                 //Change
                 const result = await this.cb(...params);
