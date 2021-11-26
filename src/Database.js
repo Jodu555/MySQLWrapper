@@ -292,6 +292,10 @@ class DatabaseObject {
         this.caches.set(name, new Cache(name, settings, cb));
     }
 
+    getCache(name) {
+        return this.caches.get(name);
+    }
+
 }
 
 function createDatabase(host, user, password, database) {

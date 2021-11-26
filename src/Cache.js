@@ -51,6 +51,7 @@ class Cache {
         this.map.set(params, data);
 
         return returnObject;
-
     }
 }
+
+module.exports = Cache;
