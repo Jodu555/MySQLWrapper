@@ -193,7 +193,6 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
     * [ ] post callbacks
 * [ ] Add the possibility to order a get statement
 * [x] ReEngineer the validation
-* [ ] Add a direct memory implemented caching system
 * [ ] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
 * [ ] Implement a whole caching system
