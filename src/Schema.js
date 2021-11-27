@@ -87,6 +87,16 @@ class Schema {
                         return;
                     }
                 }
+
+                //Check if there is a own specified parse function
+                if (parse.parse && typeof parse.parse == 'function') {
+                    const returnValue = parse.parse(value);
+                    if (!returnValue.success) {
+                        errors.push(returnValue.errorMessage);
+                        return;
+                    }
+                }
+
             }
 
             if (this.options && this.options.even && Array.isArray(this.options.even)) {
