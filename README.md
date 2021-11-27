@@ -193,9 +193,9 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
     * [ ] post callbacks
 * [ ] Add the possibility to order a get statement
 * [x] ReEngineer the validation
-* [ ] Validate if the Validation works just fine
+* [x] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
-* [ ] Implement a whole caching system
+* [x] Implement a whole caching system
     * [ ] Add This system to the documentation
 * [ ] Schema Thing
     * [ ] Immutable values
