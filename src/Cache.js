@@ -25,12 +25,17 @@ class Cache {
         let returnObject = {};
         let data = this.getValueFromMapAsArrayKey(params) || {};
         if (this.calls) {
+            console.log(1);
             if (data && (data.calls <= this.calls)) {
                 //Persist
                 data.calls++;
-                if (returnObject && !returnObject.cached) {
+                console.log(returnObject);
+                console.log(returnObject.cached);
+                if (returnObject && returnObject.cached != undefined) {
+                    console.log(2);
                     returnObject = { ...returnObject, ...data, cached: false };
                 } else {
+                    console.log(3);
                     returnObject = { ...returnObject, ...data, cached: true };
                 }
             } else {

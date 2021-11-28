@@ -161,7 +161,7 @@ await database.get('tablename').getLatest('type', {
 ```javascript
 database.registerCache('nameOfTheCache', {
     time: 1000 * 60 * 60, //After 1 Hour the cache gets refreshed
-    calls: 3 //After 3 calls from the cache it gets refreshed 
+    calls: 3 //After 4 cause 3 is inc. calls from the cache it gets refreshed 
     //These both values can work together or u only specify one of them
 }, async (param) => {
     //Here comes the code which gets called if the cache is initialized or refreshes
