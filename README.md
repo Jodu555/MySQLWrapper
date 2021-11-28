@@ -216,6 +216,7 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 * [x] Implement a whole caching system
     * [ ] Add This system to the documentation
 * [ ] Schema Thing
+    * [ ] XOR Option : So either the username or email or both
     * [ ] Immutable values
     * [ ] Virtual Variables
     * [x] Accept a anonymous function for the default value
