@@ -3,7 +3,6 @@ class Cache {
         this.name = name;
         ({ time: this.cacheTime, calls: this.calls } = settings);
         this.cb = cb;
-        this.data = {};
         this.map = new Map();
     }
 
