@@ -171,7 +171,7 @@ database.registerCache('nameOfTheCache', {
 // To get a cached value
 const output = await database.getCache('nameOfTheCache').get('value');
 // This returns an object with infos about the calls the cachedTime and the data
-// => { data: {}, calls: 1, cached: false }
+// => { data: {}, calls: 1, cached: false, cacheTime: 1638083909074 }
 ```
 
 
