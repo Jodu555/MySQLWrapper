@@ -9,7 +9,8 @@ An NodeJS mysql wrapper to convert objects to the full query String! Nice to sim
   * Update Database Entrys
   * Delete Database Entrys
   * Helps you on handling with timestamps
-  * Provides an set of callbacks to may log the infos
+  * Provides a full in memory Caching-System
+  * Provides a set of callbacks to may log the infos
 
 ## Usage
 
