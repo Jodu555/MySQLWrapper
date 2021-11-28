@@ -2,6 +2,7 @@ class Cache {
     constructor(name, settings, cb) {
         this.name = name;
         ({ time: this.cacheTime, calls: this.calls } = settings);
+        this.calls = this.calls || Infinity;
         this.cb = cb;
         this.map = new Map();
     }
@@ -20,7 +21,7 @@ class Cache {
     }
 
     async get(...params) {
-        console.log('Params', params);
+        // console.log('Params', params);
         let returnObject = {};
         let data = this.getValueFromMapAsArrayKey(params) || {};
         if (this.calls) {
@@ -56,6 +57,9 @@ class Cache {
                 if (returnObject.cached) {
                     const result = await this.cb(...params);
                     data = { ...data, data: result, cacheTime: Date.now() + this.cacheTime };
+                    returnObject = { ...returnObject, ...data, cached: false };
+                } else {
+                    data = { ...data, cacheTime: Date.now() + this.cacheTime };
                     returnObject = { ...returnObject, ...data, cached: false };
                 }
 
