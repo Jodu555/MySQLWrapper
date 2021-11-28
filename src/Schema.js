@@ -52,6 +52,7 @@ class Schema {
             }
 
             //Check if exists and is required
+            //TODO: Added the xor option
             if (!value) {
                 if (parse.required)
                     errors.push('Missing: ' + name)
@@ -69,6 +70,7 @@ class Schema {
 
             //Check if parse is matching
             if (parse) {
+                //Check for alphanumerical
                 if (parse.anum) {
                     const regex = new RegExp(/^[a-zA-Z0-9]+$/);
                     if (!regex.test(value)) {
