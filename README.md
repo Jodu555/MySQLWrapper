@@ -214,7 +214,7 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 * [x] Validate if the Validation works just fine
 * [ ] Add the Validation to the documentation
 * [x] Implement a whole caching system
-    * [ ] Add This system to the documentation
+    * [x] Add This system to the documentation
 * [ ] Schema Thing
     * [ ] XOR Option : So either the username or email or both
     * [ ] Immutable values
