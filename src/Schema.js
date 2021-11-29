@@ -52,7 +52,8 @@ class Schema {
                 }
 
                 //Null/Required override
-                if (!this.schema[key].required == undefined && this.ref_table[key].null != undefined) {
+
+                if (this.schema[key].required == undefined && this.ref_table[key].null != undefined) {
                     this.schema[key].required = !this.ref_table[key].null;
                 }
 
