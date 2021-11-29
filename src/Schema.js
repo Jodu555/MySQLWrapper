@@ -26,7 +26,6 @@ const testSchema = {
 
 class Schema {
     constructor(name, schema, ref_table) {
-        console.log(name, schema, ref_table);
         this.name = name;
         this.ref_table = ref_table;
         this.options = schema.options;
@@ -38,10 +37,18 @@ class Schema {
         }
         if (this.ref_table)
             this.setupForRefTable();
+
+        console.log(name, schema, ref_table);
     }
 
     setupForRefTable() {
+        delete this.ref_table.options;
 
+        Object.keys(this.ref_table).forEach(key => {
+            if (this.schema[key]) {
+                this.schema[key].type = this.ref_table[key].type;
+            }
+        });
     }
 
     validate(obj) {
