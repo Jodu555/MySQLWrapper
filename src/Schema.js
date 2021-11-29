@@ -25,8 +25,10 @@ const testSchema = {
 };
 
 class Schema {
-    constructor(name, schema) {
+    constructor(name, schema, ref_table) {
+        console.log(name, schema, ref_table);
         this.name = name;
+        this.ref_table = ref_table;
         this.options = schema.options;
         delete schema.options;
         this.schema = schema;
@@ -34,6 +36,12 @@ class Schema {
             string: ['VARCHAR', 'TEXT', 'BLOB'],
             number: ['BIT', 'INT', 'FLOAT', 'DOUBLE']
         }
+        if (this.ref_table)
+            this.setupForRefTable();
+    }
+
+    setupForRefTable() {
+
     }
 
     validate(obj) {
