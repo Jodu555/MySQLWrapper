@@ -298,12 +298,12 @@ class DatabaseObject {
         return this.caches.get(name);
     }
 
-    regtisterSchema(name, schema) {
-        this.schems.set(new Schema(name, schema));
+    registerSchema(name, schema, reference_table_name) {
+        this.schems.set(new Schema(name, schema, reference_table_name ? this.tables.get(reference_table_name) : undefined));
     }
 
     getSchema(name) {
-
+        return this.schems.get(name);
     }
 
 }
