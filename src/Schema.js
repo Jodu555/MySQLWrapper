@@ -27,7 +27,7 @@ const testSchema = {
 class Schema {
     constructor(name, schema, ref_table) {
         this.name = name;
-        this.ref_table = ref_table;
+        this.ref_table = JSON.parse(JSON.stringify(ref_table));
         this.options = schema.options;
         delete schema.options;
         this.schema = schema;
@@ -35,14 +35,28 @@ class Schema {
             string: ['VARCHAR', 'TEXT', 'BLOB'],
             number: ['BIT', 'INT', 'FLOAT', 'DOUBLE']
         }
+
+        this.setupEven();
+
         if (this.ref_table)
             this.setupForRefTable();
 
-        console.log(name, schema, ref_table);
+        // console.log(name, schema, ref_table);
+    }
+
+    setupEven() {
+        if (this.options.even && Array.isArray(this.options.even)) {
+            this.options.even.forEach(even => {
+                const [where, to] = even.split('/');
+                this.schema[where] = { ...this.schema[to], ...this.schema[where] };
+                this.schema[to] = { ...this.schema[to], ...this.schema[where] };
+            });
+        }
     }
 
     setupForRefTable() {
         delete this.ref_table.options;
+
         Object.keys(this.ref_table).forEach(key => {
             if ((!this.schema[key] || this.schema[key]) && this.ref_table[key]) {
 
@@ -52,7 +66,6 @@ class Schema {
                 }
 
                 //Null/Required override
-
                 if (this.schema[key].required == undefined && this.ref_table[key].null != undefined) {
                     this.schema[key].required = !this.ref_table[key].null;
                 }
@@ -60,6 +73,18 @@ class Schema {
             }
 
         });
+        console.log(111, this.schema, this.ref_table);
+        if (this.options.even && Array.isArray(this.options.even)) {
+            this.options.even.forEach(even => {
+                const [where, to] = even.split('/');
+                this.ref_table[where] = { ...this.ref_table[to], ...this.ref_table[where] };
+                this.ref_table[to] = { ...this.ref_table[to], ...this.ref_table[where] };
+
+                this.schema[where] = { ...this.schema[to], ...this.schema[where] };
+                this.schema[to] = { ...this.schema[to], ...this.schema[where] };
+            });
+        }
+        console.log(222, this.schema, this.ref_table);
     }
 
     validate(obj) {
