@@ -25,7 +25,8 @@ const testSchema = {
 };
 
 class Schema {
-    constructor(schema) {
+    constructor(name, schema) {
+        this.name = name;
         this.options = schema.options;
         delete schema.options;
         this.schema = schema;
