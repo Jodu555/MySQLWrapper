@@ -108,7 +108,7 @@ class Schema {
 
             //Check if parse is matching
             if (parse) {
-                //Check for alphanumerical
+                //Alphanumerical Parsing
                 if (parse.anum) {
                     const regex = new RegExp(/^[a-zA-Z0-9]+$/);
                     if (!regex.test(value)) {
@@ -119,7 +119,7 @@ class Schema {
 
                 errors.push(...this.parseMinMax(name, value, parse))
 
-                //Check For e-Mail Parsing
+                //e-Mail Parsing
                 if (parse.email) {
                     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     if (!re.test(String(value).toLowerCase())) {
@@ -128,7 +128,7 @@ class Schema {
                     }
                 }
 
-                //Check if there is a own specified parse function
+                //Check for Own Parsing Function
                 if (parse.parse && typeof parse.parse == 'function') {
                     const returnValue = parse.parse(value);
                     if (!returnValue.success) {
