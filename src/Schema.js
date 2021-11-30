@@ -100,7 +100,7 @@ class Schema {
             //Check if is right type 
             if (parse.type)
                 Object.keys(this.validators).forEach(validator => {
-                    if (new RegExp(this.validators[validator].join("|")).test(definition.type.toUpperCase()) && typeof value !== validator) {
+                    if (new RegExp(this.validators[validator].join("|")).test(parse.type.toUpperCase()) && typeof value !== validator) {
                         errors.push('Invalid value: ' + name + ' expected: ' + validator + '! But became: ' + typeof value);
                         return;
                     }
