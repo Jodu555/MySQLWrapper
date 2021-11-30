@@ -146,7 +146,7 @@ class Schema {
                     const def = even.split('/')[0],
                         should = even.split('/')[1];
                     if (def == name && obj[should] && value !== obj[should])
-                        errors.push('The: \'' + name + '\' value should be equal to the \'' + should + '\' value!');
+                        errors.push('The: \'' + name + '\' value should be equal to the \'' + should + '\' value! But isn\'t!');
                 });
             }
 
