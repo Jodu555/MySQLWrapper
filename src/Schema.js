@@ -36,7 +36,7 @@ class Schema {
             number: ['BIT', 'INT', 'FLOAT', 'DOUBLE']
         }
 
-        this.setupEven();
+        this.setupEven(this.schema);
 
         if (this.ref_table)
             this.setupForRefTable();
@@ -44,12 +44,12 @@ class Schema {
         // console.log(name, schema, ref_table);
     }
 
-    setupEven() {
+    setupEven(obj) {
         if (this.options.even && Array.isArray(this.options.even)) {
             this.options.even.forEach(even => {
                 const [where, to] = even.split('/');
-                this.schema[where] = { ...this.schema[to], ...this.schema[where] };
-                this.schema[to] = { ...this.schema[to], ...this.schema[where] };
+                obj[where] = { ...obj[to], ...obj[where] };
+                obj[to] = { ...obj[to], ...obj[where] };
             });
         }
     }
@@ -74,16 +74,8 @@ class Schema {
 
         });
         console.log(111, this.schema, this.ref_table);
-        if (this.options.even && Array.isArray(this.options.even)) {
-            this.options.even.forEach(even => {
-                const [where, to] = even.split('/');
-                this.ref_table[where] = { ...this.ref_table[to], ...this.ref_table[where] };
-                this.ref_table[to] = { ...this.ref_table[to], ...this.ref_table[where] };
-
-                this.schema[where] = { ...this.schema[to], ...this.schema[where] };
-                this.schema[to] = { ...this.schema[to], ...this.schema[where] };
-            });
-        }
+        this.setupEven(this.ref_table);
+        this.setupEven(this.schema);
         console.log(222, this.schema, this.ref_table);
     }
 
