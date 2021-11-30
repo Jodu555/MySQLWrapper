@@ -299,7 +299,7 @@ class DatabaseObject {
     }
 
     registerSchema(name, schema, reference_table_name) {
-        this.schems.set(new Schema(name, schema, reference_table_name ? this.tables.get(reference_table_name).table : undefined));
+        this.schems.set(name, new Schema(name, schema, reference_table_name ? this.tables.get(reference_table_name).table : undefined));
     }
 
     getSchema(name) {
