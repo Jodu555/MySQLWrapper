@@ -59,24 +59,18 @@ class Schema {
 
         Object.keys(this.ref_table).forEach(key => {
             if ((!this.schema[key] || this.schema[key]) && this.ref_table[key]) {
-
                 //Type override
                 if (!this.schema[key].type && this.ref_table[key].type) {
                     this.schema[key].type = this.ref_table[key].type;
                 }
-
                 //Null/Required override
                 if (this.schema[key].required == undefined && this.ref_table[key].null != undefined) {
                     this.schema[key].required = !this.ref_table[key].null;
                 }
-
             }
-
         });
-        console.log(111, this.schema, this.ref_table);
         this.setupEven(this.ref_table);
         this.setupEven(this.schema);
-        console.log(222, this.schema, this.ref_table);
     }
 
     validate(obj) {
