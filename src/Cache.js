@@ -1,6 +1,7 @@
 class Cache {
     constructor(name, settings, cb) {
         this.name = name;
+        this.refreshPending = false;
         ({ time: this.cacheTime, calls: this.calls } = settings);
         this.calls = this.calls || Infinity;
         this.cb = cb;
@@ -20,11 +21,27 @@ class Cache {
         return arr1.length == arr2.length && JSON.stringify(arr1) == JSON.stringify(arr2);
     }
 
+    refresh(...params) {
+        if ([...params].length > 0) {
+            let data = this.getValueFromMapAsArrayKey(params) || { refreshPending: false };
+            data = { ...data, refreshPending: true };
+            this.map.set(params, data);
+        } else {
+            this.refreshPending = true;
+        }
+    }
+
     async get(...params) {
         // console.log('Params', params);
         let returnObject = {};
-        let data = this.getValueFromMapAsArrayKey(params) || {};
-        if (this.calls) {
+        let data = this.getValueFromMapAsArrayKey(params) || { refreshPending: false };
+        if (this.refreshPending || data.refreshPending) {
+            const result = await this.cb(...params);
+            data = { ...data, data: result, calls: 1, refreshPending: false };
+            returnObject = { ...returnObject, ...data, cached: false }
+            this.refreshPending = false;
+        }
+        if (this.calls && !data.cached) {
             if (data && (data.calls <= this.calls)) {
                 //Persist
                 data.calls++;
@@ -43,7 +60,7 @@ class Cache {
                 }
             }
         }
-        if (this.cacheTime) {
+        if (this.cacheTime && !data.cached) {
             if (data && (data.cacheTime >= Date.now())) {
                 //Persist
                 if (returnObject && !returnObject.cached) {
