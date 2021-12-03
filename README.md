@@ -172,6 +172,13 @@ database.registerCache('nameOfTheCache', {
 const output = await database.getCache('nameOfTheCache').get('value');
 // This returns an object with infos about the calls the cachedTime and the data
 // => { data: {}, calls: 1, cached: false, cacheTime: 1638083909074 }
+
+//To Refresh the full cache with all kinds of passed parameters use:
+database.getCache('nameOfTheCache').refresh();
+
+//If you want to only refresh the cache for specific parameters use:
+database.getCache('nameOfTheCache').refresh('param1');
+
 ```
 
 
