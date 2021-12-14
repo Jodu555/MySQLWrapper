@@ -43,7 +43,7 @@ database.createTable('services', {
         PK: 'UUID',
         K: [
             'name'
-        ]
+        ],
         FK: {
             'user_UUID': 'users/UUID',
         },
