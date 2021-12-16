@@ -75,6 +75,12 @@ class Schema {
 
     validate(obj) {
         const errors = [];
+        if (this.options.removeOthers == undefined || this.options.removeOthers)
+            Object.keys(obj).forEach(name => {
+                if (!this.schema[name])
+                    delete obj[name];
+            });
+
         Object.keys(this.schema).forEach(name => {
             let value = obj[name],
                 parse = this.schema[name];
