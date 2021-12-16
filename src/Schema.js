@@ -89,6 +89,15 @@ class Schema {
                 obj[name] = value;
             }
 
+            if (parse.value) {
+                if (typeof parse.value == 'function') {
+                    value = parse.value();
+                } else {
+                    value = parse.value;
+                }
+                obj[name] = value;
+            }
+
             //Check if exists and is required
             //TODO: Added the xor option
             if (!value) {
