@@ -2,7 +2,7 @@ let database = null;
 const mysql = require('mysql');
 const thingDatabase = require('./thingDatabase')
 const Cache = require('./Cache');
-const Schema = require('./Schema');
+const { Schema, ParsingError } = require('./Schema');
 
 class DatabaseObject {
 
@@ -16,6 +16,7 @@ class DatabaseObject {
         this.callbacks = new Map();
         this.caches = new Map();
         this.schems = new Map();
+        this.ParsingError = ParsingError;
         this.validators = {
             string: ['VARCHAR', 'TEXT', 'BLOB'],
             number: ['BIT', 'INT', 'FLOAT', 'DOUBLE']
@@ -32,7 +33,7 @@ class DatabaseObject {
         this.connection.connect();
         this.connection.on('error', (error) => {
             console.log('Database error', error);
-            if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+            if (error.code === 'PROTOCOL_CONNECTION_LOST' || error.code === 'ECONNRESET') {
                 console.log('Database connection Failed!');
                 console.log('Attempting to reconnect...');
                 this.reconnect();

@@ -73,7 +73,7 @@ class Schema {
         this.setupEven(this.schema);
     }
 
-    validate(obj) {
+    validate(obj, thro) {
         const errors = [];
         if (this.options.removeOthers == undefined || this.options.removeOthers)
             Object.keys(obj).forEach(name => {
@@ -172,6 +172,12 @@ class Schema {
         }
         if (returnObject.success)
             returnObject.object = obj;
+
+        if (thro && !returnObject.success) {
+            throw new ParsingError(returnObject.errors.join(' / '));
+        } else {
+            return returnObject;
+        }
         return returnObject;
     }
 
@@ -190,4 +196,12 @@ class Schema {
 
 }
 
-module.exports = Schema;
+class ParsingError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = this.constructor.name;
+        Error.captureStackTrace(this, this.constructor);
+    }
+}
+
+module.exports = { Schema, ParsingError };
