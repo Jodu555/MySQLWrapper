@@ -61,7 +61,7 @@ class Schema {
             if ((!this.schema[key] || this.schema[key]) && this.ref_table[key]) {
                 //Type override
                 if (!this.schema[key]?.type && this.ref_table[key]?.type) {
-                    this.schema[key]?.type = this.ref_table[key]?.type;
+                    this.schema[key].type = this.ref_table[key].type;
                 }
                 //Null/Required override
                 if (this.schema[key].required == undefined && this.ref_table[key].null != undefined) {
