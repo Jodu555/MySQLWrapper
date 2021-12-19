@@ -60,8 +60,8 @@ class Schema {
         Object.keys(this.ref_table).forEach(key => {
             if ((!this.schema[key] || this.schema[key]) && this.ref_table[key]) {
                 //Type override
-                if (!this.schema[key].type && this.ref_table[key].type) {
-                    this.schema[key].type = this.ref_table[key].type;
+                if (!this.schema[key]?.type && this.ref_table[key]?.type) {
+                    this.schema[key]?.type = this.ref_table[key]?.type;
                 }
                 //Null/Required override
                 if (this.schema[key].required == undefined && this.ref_table[key].null != undefined) {
