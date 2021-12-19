@@ -45,7 +45,7 @@ class Schema {
     }
 
     setupEven(obj) {
-        if (this.options.even && Array.isArray(this.options.even)) {
+        if (this?.options?.even && Array.isArray(this?.options?.even)) {
             this.options.even.forEach(even => {
                 const [where, to] = even.split('/');
                 obj[where] = { ...obj[to], ...obj[where] };
@@ -75,7 +75,7 @@ class Schema {
 
     validate(obj, thro) {
         const errors = [];
-        if (this.options.removeOthers == undefined || this.options.removeOthers)
+        if (this.options?.removeOthers == undefined || this.options?.removeOthers)
             Object.keys(obj).forEach(name => {
                 if (!this.schema[name])
                     delete obj[name];
@@ -154,7 +154,7 @@ class Schema {
 
             }
 
-            if (this.options && this.options.even && Array.isArray(this.options.even)) {
+            if (this?.options && this?.options.even && Array.isArray(this?.options.even)) {
 
                 //Even Parsing
                 this.options.even.forEach(even => {
