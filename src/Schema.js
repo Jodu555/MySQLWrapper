@@ -76,11 +76,14 @@ class Schema {
 
     validate(obj, thro) {
         const errors = [];
-        if (this.options?.removeOthers == undefined || this.options?.removeOthers)
+
+        //Remove unknown fields
+        if (this.options?.removeOthers == undefined || this.options?.removeOthers) {
             Object.keys(obj).forEach(name => {
                 if (!this.schema[name])
                     delete obj[name];
             });
+        }
 
         Object.keys(this.schema).forEach(name => {
             let value = obj[name],
@@ -96,6 +99,7 @@ class Schema {
                 obj[name] = value;
             }
 
+            //Check if there is a predefined value
             if (parse.value) {
                 if (typeof parse.value == 'function') {
                     value = parse.value();
@@ -145,12 +149,13 @@ class Schema {
                 }
 
                 //Check for Own Parsing Function
-                if (parse.parse && typeof parse.parse == 'function') {
-                    const returnValue = parse.parse(value);
-                    if (!returnValue.success) {
-                        errors.push(returnValue.errorMessage);
-                        return;
-                    }
+                if (parse.parse && (typeof parse.parse == 'function' || Array.isArray(parse.parse))) {
+                    const fns = [...parse.parse];
+                    fns.forEach(fn => {
+                        const returnValue = fn(value);
+                        if (!returnValue.success)
+                            errors.push(returnValue.errorMessage);
+                    });
                 }
 
             }
