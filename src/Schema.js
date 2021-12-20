@@ -1,22 +1,49 @@
 const testSchema = {
     options: {
         xor: ['username/email'],
-        even: ['password/repeatPassword']
+        even: ['password/repeatPassword'] // This assures that the password and repeatPassword have the exact same value
+    },
+    UUID: {
+        value: () => createUUID(), // This always sets a value
     },
     username: {
-        required: true,
-        anum: true,
-        min: 5, //Included
-        max: 10, //Included
-        default: 'Anonymous'
+        required: true, //This requires a value to be present
+        anum: true, // This assures that only alpha numerical chars are allowed
+        min: 5, // this specifies the minimal char length! Included
+        max: 10, // this specifies the minimal char length! Included
+        default: 'Anonymous' // This defaults the value if isnt present
     },
     email: {
         required: true,
-        email: true
+        email: true // This Validates if its an email
     },
     password: {
         required: true,
         min: 3
+    },
+    code: {
+        required: true,
+        min: 1, //This specifies the minimum number! Included
+        min: 999//This specifies the maximal number! Included
+    },
+    ID: {
+        required: true,
+        parse: (val) => {
+            //So the id must have the format ==456870===
+            return { success: val.startsWith('==') && val.endsWith('0==='), errorMessage: 'The ID dont passes our system!' };
+        },
+    },
+    multiple: {
+        required: true,
+        //The Parse option can also be used with arrays for multiple functions and mutiple errors
+        parse: [
+            (val) => {
+                return { success: yourParsing, errorMessage: 'Your Parsing error message' };
+            },
+            (val) => {
+                return { success: yourSecondParsing, errorMessage: 'Your Second Parsing error message' };
+            }
+        ],
     },
     repeatPassword: {
         required: true,
