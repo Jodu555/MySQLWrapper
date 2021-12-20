@@ -150,7 +150,8 @@ class Schema {
 
                 //Check for Own Parsing Function
                 if (parse.parse && (typeof parse.parse == 'function' || Array.isArray(parse.parse))) {
-                    const fns = [...parse.parse];
+                    const fns = Array.isArray(parse.parse) ? [...parse.parse] : [parse.parse];
+
                     fns.forEach(fn => {
                         const returnValue = fn(value);
                         if (!returnValue.success)
