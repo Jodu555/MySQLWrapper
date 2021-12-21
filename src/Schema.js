@@ -48,6 +48,10 @@ const testSchema = {
     repeatPassword: {
         required: true,
         min: 3
+    },
+    state: {
+        required: true,
+        enum: ['activating', 'active', 'inactive']
     }
 };
 
