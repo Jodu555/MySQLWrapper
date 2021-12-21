@@ -148,6 +148,12 @@ class Schema {
                 return;
             }
 
+            if (parse.enum && Array.isArray(parse.enum)) {
+                if (!parse.enum.includes(value)) {
+                    errors.push('Parsing Error: ' + name + ' can only bee ' + parse.enum.join(', ').replace(/, ([^,]*)$/, ' and $1'));
+                }
+            }
+
             //Check if is right type 
             if (parse.type)
                 Object.keys(this.validators).forEach(validator => {
