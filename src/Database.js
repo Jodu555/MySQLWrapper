@@ -37,6 +37,7 @@ class DatabaseObject {
                 console.log('Database connection Failed!');
                 console.log('Attempting to reconnect...');
                 this.reconnect();
+                return;
             } else {
                 throw error;
             }
