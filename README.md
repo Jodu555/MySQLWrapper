@@ -208,6 +208,8 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 
 ## Todos
 
+* [ ] Implement the pooling system so the connections dont fail
+* [ ] Implement multiple databases for redundancy
 * [x] Add possibility to createTable to auto implement the timestamps created_AT / updated_AT
 * [x] Add the possibility to activate softdelete and add in the timestamps
 * [x] Add the possibility to create indexes in tables
