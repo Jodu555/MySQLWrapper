@@ -1,6 +1,6 @@
 {
 	"name": "@jodu555/mysqlapi",
-	"version": "3.7.2-beta",
+	"version": "3.7.2",
 	"description": "",
 	"main": "src/index.js",
 	"scripts": {
