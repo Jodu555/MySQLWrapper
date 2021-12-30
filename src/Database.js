@@ -24,32 +24,44 @@ class DatabaseObject {
     }
 
     connect() {
-        this.connection = mysql.createConnection({
+        // this.connection = mysql.createConnection({
+        //     host: this.host,
+        //     user: this.user,
+        //     password: this.password,
+        //     database: this.database,
+        // });
+        this.connection = mysql.createPool({
+            connectionLimit: 10,
             host: this.host,
             user: this.user,
             password: this.password,
             database: this.database,
         });
-        this.connection.connect();
-        this.connection.on('error', (error) => {
-            console.log('Database error', error);
-            if (error.code === 'PROTOCOL_CONNECTION_LOST' || error.code === 'ECONNRESET') {
-                console.log('Database connection Failed!');
-                console.log('Attempting to reconnect...');
-                this.reconnect();
-                return;
-            } else {
-                throw error;
-            }
-        });
-        console.log('Database Connected!');
+        // this.connection.connect();
+        // this.connection.on('error', (error) => {
+        //     console.log('Database error', error);
+        //     if (error.code === 'PROTOCOL_CONNECTION_LOST' || error.code === 'ECONNRESET') {
+        //         console.log('Database connection Failed!');
+        //         console.log('Attempting to reconnect...');
+        //         this.reconnect();
+        //         return;
+        //     } else {
+        //         throw error;
+        //     }
+        // });
+        console.log('Database Pool Initialized!');
+        // console.log('Database Connected!');
     }
 
     disconnect() {
-        if (this.connection != null) {
-            this.connection.end();
-            this.connection = null;
-        }
+        // if (this.connection != null) {
+        //     this.connection.end();
+        //     this.connection = null;
+        // }
+        this.connection.end(function (err) {
+            console.log('Disconnected');
+            // all connections in the pool have ended
+        });
     }
 
     reconnect() {
