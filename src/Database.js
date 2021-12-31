@@ -11,7 +11,7 @@ class DatabaseObject {
         this.user = user;
         this.password = password;
         this.database = database;
-        this.connection = null;
+        this.pool = null;
         this.tables = new Map();
         this.callbacks = new Map();
         this.caches = new Map();
@@ -24,21 +24,21 @@ class DatabaseObject {
     }
 
     connect() {
-        // this.connection = mysql.createConnection({
+        // this.pool = mysql.createConnection({
         //     host: this.host,
         //     user: this.user,
         //     password: this.password,
         //     database: this.database,
         // });
-        this.connection = mysql.createPool({
+        this.pool = mysql.createPool({
             connectionLimit: 10,
             host: this.host,
             user: this.user,
             password: this.password,
             database: this.database,
         });
-        // this.connection.connect();
-        // this.connection.on('error', (error) => {
+        // this.pool.connect();
+        // this.pool.on('error', (error) => {
         //     console.log('Database error', error);
         //     if (error.code === 'PROTOCOL_CONNECTION_LOST' || error.code === 'ECONNRESET') {
         //         console.log('Database connection Failed!');
@@ -54,11 +54,11 @@ class DatabaseObject {
     }
 
     disconnect() {
-        // if (this.connection != null) {
-        //     this.connection.end();
-        //     this.connection = null;
+        // if (this.pool != null) {
+        //     this.pool.end();
+        //     this.pool = null;
         // }
-        this.connection.end(function (err) {
+        this.pool.end(function (err) {
             console.log('Disconnected');
             // all connections in the pool have ended
         });
@@ -156,7 +156,7 @@ class DatabaseObject {
 
 
         let sql = 'CREATE TABLE IF NOT EXISTS ' + tablename + ' (' + parts + ')';
-        this.connection.query(sql, (error, results, fields) => {
+        this.pool.query(sql, (error, results, fields) => {
             if (error) throw error;
         });
         Object.keys(tablecopy).forEach(name => {
@@ -168,7 +168,7 @@ class DatabaseObject {
             };
         });
 
-        this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, options, this, this.connection) })
+        this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, options, this, this.pool) })
     }
 
     parseTimeStamps(options) {
@@ -229,7 +229,7 @@ class DatabaseObject {
         if (this.tables.has(name))
             return this.tables.get(name).database;
         console.log('You tried to access a Table wich is not configured yet! Deprecation Notice!');
-        const newThingDatabase = new thingDatabase(name, {}, this, this.connection);
+        const newThingDatabase = new thingDatabase(name, {}, this, this.pool);
         this.tables.set(name, { table: { error: 'The Table was not created from the API' }, database: newThingDatabase });
         return this.get(name);
     }
