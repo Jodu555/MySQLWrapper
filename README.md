@@ -208,7 +208,9 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 
 ## Todos
 
-* [ ] Implement the pooling system so the connections dont fail
+* [x] Implement the pooling system so the connections dont fail
+* [ ] Keep track of the actions obj in the thingdatabase
+* [ ] Implement pseudo values which are based on actual values
 * [ ] Implement multiple databases for redundancy
 * [x] Add possibility to createTable to auto implement the timestamps created_AT / updated_AT
 * [x] Add the possibility to activate softdelete and add in the timestamps
