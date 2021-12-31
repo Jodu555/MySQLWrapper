@@ -24,12 +24,6 @@ class DatabaseObject {
     }
 
     connect() {
-        // this.pool = mysql.createConnection({
-        //     host: this.host,
-        //     user: this.user,
-        //     password: this.password,
-        //     database: this.database,
-        // });
         this.pool = mysql.createPool({
             connectionLimit: 10,
             host: this.host,
@@ -37,36 +31,14 @@ class DatabaseObject {
             password: this.password,
             database: this.database,
         });
-        // this.pool.connect();
-        // this.pool.on('error', (error) => {
-        //     console.log('Database error', error);
-        //     if (error.code === 'PROTOCOL_CONNECTION_LOST' || error.code === 'ECONNRESET') {
-        //         console.log('Database connection Failed!');
-        //         console.log('Attempting to reconnect...');
-        //         this.reconnect();
-        //         return;
-        //     } else {
-        //         throw error;
-        //     }
-        // });
         console.log('Database Pool Initialized!');
-        // console.log('Database Connected!');
     }
 
     disconnect() {
-        // if (this.pool != null) {
-        //     this.pool.end();
-        //     this.pool = null;
-        // }
         this.pool.end(function (err) {
             console.log('Disconnected');
             // all connections in the pool have ended
         });
-    }
-
-    reconnect() {
-        this.disconnect();
-        this.connect();
     }
 
     setCallback(identifier, cb) {
@@ -168,7 +140,7 @@ class DatabaseObject {
             };
         });
 
-        this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, options, this, this.pool) })
+        this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, options, this) })
     }
 
     parseTimeStamps(options) {
@@ -229,7 +201,7 @@ class DatabaseObject {
         if (this.tables.has(name))
             return this.tables.get(name).database;
         console.log('You tried to access a Table wich is not configured yet! Deprecation Notice!');
-        const newThingDatabase = new thingDatabase(name, {}, this, this.pool);
+        const newThingDatabase = new thingDatabase(name, {}, this);
         this.tables.set(name, { table: { error: 'The Table was not created from the API' }, database: newThingDatabase });
         return this.get(name);
     }

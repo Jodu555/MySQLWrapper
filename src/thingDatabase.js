@@ -1,10 +1,10 @@
 const { queryPartGeneration } = require('./generationUtils');
 class thingDatabase {
-	constructor(table_name, options, database, connection) {
+	constructor(table_name, options, database) {
 		this.table_name = table_name;
 		this.options = options;
 		this.database = database;
-		this.connection = connection;
+		this.pool = this.database.pool;
 		console.log(this.table_name + ' Database Initialized');
 	}
 
@@ -39,7 +39,7 @@ class thingDatabase {
 		valueQuery += ')';
 		partsQuery += ')';
 		let query = `INSERT INTO ${this.table_name} ${partsQuery} VALUES ${valueQuery}`;
-		this.connection.query(query, values, (error, results, fields) => {
+		this.pool.query(query, values, (error, results, fields) => {
 			if (error) {
 				throw error;
 				this.database.reconnect();
@@ -71,7 +71,7 @@ class thingDatabase {
 
 			const values = part.values.concat(parts.values);
 
-			this.connection.query(query, values, (error, results, fields) => {
+			this.pool.query(query, values, (error, results, fields) => {
 				if (error) {
 					throw error;
 					this.database.reconnect();
@@ -105,7 +105,7 @@ class thingDatabase {
 		}
 		this.database.callCallback(this.table_name, 'GET', search);
 		return new Promise(async (resolve, reject) => {
-			await this.connection.query(query, values, async (error, results, fields) => {
+			await this.pool.query(query, values, async (error, results, fields) => {
 				const data = [];
 				if (error) {
 					throw error;
@@ -131,7 +131,7 @@ class thingDatabase {
 		const part = queryPartGeneration(search);
 		query += part.query;
 		const values = part.values;
-		this.connection.query(query, values, (error, results, fields) => {
+		this.pool.query(query, values, (error, results, fields) => {
 			if (error) {
 				throw error;
 				this.database.reconnect();
@@ -161,7 +161,7 @@ class thingDatabase {
 				query += ' ORDER BY ' + timeRow + ' DESC LIMIT 1';
 				this.database.callCallback(this.table_name, 'LATEST', { action, search });
 				return new Promise(async (resolve, reject) => {
-					await this.connection.query(query, values, async (error, results, fields) => {
+					await this.pool.query(query, values, async (error, results, fields) => {
 						if (error)
 							throw error;
 						if (results.length == 0) resolve(null);
