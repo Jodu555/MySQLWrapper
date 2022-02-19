@@ -196,7 +196,10 @@ class DatabaseObject {
         };
         return parts;
     }
-
+    /**
+     * @param  {String} name the tablename
+     * @returns {thingDatabase} return the thing database object
+     */
     get(name) {
         if (this.tables.has(name))
             return this.tables.get(name).database;
@@ -293,11 +296,20 @@ class DatabaseObject {
     }
 
 }
-
+/**
+ * @param  {String} host the host of the database
+ * @param  {String} user the user of the database
+ * @param  {String} password the password of the database
+ * @param  {String} database the database in the database
+ * @returns {DatabaseObject} returns the database object
+ */
 function createDatabase(host, user, password, database) {
     this.database = new DatabaseObject(host, user, password, database);
     return this.database;
 }
+/**
+ * @returns {DatabaseObject} returns the database object
+ */
 function getDatabase() {
     return this.database;
 }
