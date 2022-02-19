@@ -7,7 +7,10 @@ class thingDatabase {
 		this.pool = this.database.pool;
 		console.log(this.table_name + ' Database Initialized');
 	}
-
+	/**
+	 * @param  {Object} thing the thing you want to create
+	 * @returns {Object} returns the actual inserted obect with for example a time
+	 */
 	create(thing) {
 		const timestamps = this.options.timestamps;
 		if (this.options && timestamps) {
@@ -49,7 +52,10 @@ class thingDatabase {
 		this.database.callCallback(this.table_name, 'CREATE', thing);
 		return thing;
 	}
-
+	/**
+	 * @param  {Object} search The search on what you want to update
+	 * @param  {Object} thing The thing you want the search results to be updated with
+	 */
 	async update(search, thing) {
 		if (this.options && this.options.timestamps) {
 			if (this.options.timestamps.updatedAt) {
@@ -88,12 +94,19 @@ class thingDatabase {
 		}
 	}
 
+	/**
+	 * @param  {Object} search the search wich element you want to get
+	 * @returns {Object} the object you want to get if found
+	 */
 	async getOne(search) {
 		const result = await this.get(search);
 		this.database.callCallback(this.table_name, 'GETONE', search);
 		return result[0];
 	}
-
+	/**
+	 * @param  {Object} search the search wich elements you want to get
+	 * @returns {Object[]} an array of objects that are found to the search
+	 */
 	async get(search) {
 		let query = 'SELECT * FROM ' + this.table_name;
 		let values;
@@ -119,7 +132,9 @@ class thingDatabase {
 			});
 		});
 	}
-
+	/**
+	 * @param  {Object} search the search wich element you want to delete
+	 */
 	async delete(search) {
 		if (this.options && this.options.softdelete && this.options.timestamps && this.options.timestamps.deletedAt) {
 			const obj = {}
@@ -140,7 +155,10 @@ class thingDatabase {
 		});
 		this.database.callCallback(this.table_name, 'DELETE', search);
 	}
-
+	/**
+	 * @param  {String} action the latest action you wanna get can be: inserted, updated or deleted
+	 * @param  {Object} search the search wich element you want to get the latet on
+	 */
 	async getLatest(action, search) {
 		const stampsDict = new Map([
 			['inserted', this.options.timestamps.createdAt],
