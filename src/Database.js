@@ -278,11 +278,28 @@ class DatabaseObject {
         });
         return errors;
     }
-
+    // database.registerCache('nameOfTheCache', {
+    //     time: 1000 * 60 * 60, //After 1 Hour the cache gets refreshed
+    //     calls: 3 //After 4 cause 3 is inc. calls from the cache it gets refreshed 
+    //     //These both values can work together or u only specify one of them
+    // }, async (param) => {
+    //     //Here comes the code which gets called if the cache is initialized or refreshes
+    //     return {};
+    // })
+    /**
+     * @param  {String} name the name of the cache
+     * @param  {Object} settings The cache settings policy
+     * @param  {int} settings.time The cache refresh time
+     * @param  {int} settings.calls The cache refresh calls
+     * @param {function(params...)} callback The callback that gets hitted if the cache need to be refreshed
+     */
     registerCache(name, settings, cb) {
         this.caches.set(name, new Cache(name, settings, cb));
     }
-
+    /**
+     * @param  {String} name gets the cache by the name
+     * @returns {Cache} returns the cache
+     */
     getCache(name) {
         return this.caches.get(name);
     }
