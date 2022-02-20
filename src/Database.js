@@ -279,11 +279,15 @@ class DatabaseObject {
         return errors;
     }
     /**
+     * @callback cacheDataGetCallback
+     * @param {Object[]} param - An integer.
+     */
+    /**
      * @param  {String} name the name of the cache
      * @param  {Object} settings The cache settings policy
      * @param  {int} settings.time The cache refresh time
      * @param  {int} settings.calls The cache refresh calls
-     * @param {function(params...)} callback The callback that gets hitted if the cache need to be refreshed
+     * @param {cacheDataGetCallback} cb The callback that gets hitted if the cache need to be refreshed
      */
     registerCache(name, settings, cb) {
         this.caches.set(name, new Cache(name, settings, cb));
