@@ -278,14 +278,6 @@ class DatabaseObject {
         });
         return errors;
     }
-    // database.registerCache('nameOfTheCache', {
-    //     time: 1000 * 60 * 60, //After 1 Hour the cache gets refreshed
-    //     calls: 3 //After 4 cause 3 is inc. calls from the cache it gets refreshed 
-    //     //These both values can work together or u only specify one of them
-    // }, async (param) => {
-    //     //Here comes the code which gets called if the cache is initialized or refreshes
-    //     return {};
-    // })
     /**
      * @param  {String} name the name of the cache
      * @param  {Object} settings The cache settings policy
@@ -303,11 +295,18 @@ class DatabaseObject {
     getCache(name) {
         return this.caches.get(name);
     }
-
+    /**
+     * @param  {String} name the schema reference name
+     * @param  {Object} schema the schema itself
+     * @param  {String} reference_table_name the database reference_table_name not needed
+     */
     registerSchema(name, schema, reference_table_name) {
         this.schems.set(name, new Schema(name, schema, reference_table_name ? this.tables.get(reference_table_name).table : undefined));
     }
-
+    /**
+     * @param  {String} name the schema name
+     * @returns {Schema} returns the with the name associated schema
+     */
     getSchema(name) {
         return this.schems.get(name);
     }
