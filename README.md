@@ -208,6 +208,7 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 
 ## Todos
 
+* [ ] Document all the public functions with jsdoc so the usage gets easier
 * [x] Implement the pooling system so the connections dont fail
 * [ ] Keep track of the actions obj in the thingdatabase
 * [ ] Implement pseudo values which are based on actual values
