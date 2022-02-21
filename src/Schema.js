@@ -142,23 +142,13 @@ class Schema {
 
             //Add Default Values
             if (parse.default && !value) {
-                value = valueOrFunctionInvocation(parse.default);
-                // if (typeof parse.default == 'function') {
-                //     value = parse.default();
-                // } else {
-                //     value = parse.default;
-                // }
+                value = this.valueOrFunctionInvocation(parse.default);
                 obj[name] = value;
             }
 
             //Check if there is a predefined value
             if (parse.value) {
-                value = valueOrFunctionInvocation(parse.value);
-                // if (typeof parse.value == 'function') {
-                //     value = parse.value();
-                // } else {
-                //     value = parse.value;
-                // }
+                value = this.valueOrFunctionInvocation(parse.value);
                 obj[name] = value;
             }
 
