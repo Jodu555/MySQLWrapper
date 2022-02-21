@@ -104,7 +104,17 @@ class Schema {
         this.setupEven(this.ref_table);
         this.setupEven(this.schema);
     }
-
+    /**
+     * @typedef {Object} ValidationReturn
+     * @property {Boolean} success Whether or not the validation was successful
+     * @property {Object} object The Validated and maybe changed object
+     * @property {Object[]} errors All the occured errors
+     */
+    /**
+     * @param  {Object} obj the object that need to be validated
+     * @param  {Boolean} thro an Boolen if the function should throw an exception or just return the error
+     * @returns {ValidationReturn}
+     */
     validate(obj, thro) {
         const errors = [];
 
