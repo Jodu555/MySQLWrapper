@@ -20,7 +20,10 @@ class Cache {
     compareArray(arr1, arr2) {
         return arr1.length == arr2.length && JSON.stringify(arr1) == JSON.stringify(arr2);
     }
-
+    /**
+     * @param  {...any} [params] If specified the cache gets for this params  refreshed
+     * Refreshes the cache for the specified params or the complete cache for every parameter
+     */
     refresh(...params) {
         if ([...params].length > 0) {
             let data = this.getValueFromMapAsArrayKey(params) || { refreshPending: false };
@@ -30,7 +33,18 @@ class Cache {
             this.refreshPending = true;
         }
     }
-
+    /**
+     * @typedef {Object} CacheReturn
+     * @property {Object} data The actual data from the cache
+     * @property {Boolean} cached The indicator whether or not the data is cached
+     * @property {Number} calls The information about how often this cache has been called by the specified params
+     * @property {Number} cacheTime The number of milliseconds of when this cache has been updated the last time
+     */
+    /**
+     * @param  {...any} [params] the params to get form a cache
+     * @returns {CacheReturn}
+     * Gets cache data for the specified params
+     */
     async get(...params) {
         // console.log('Params', params);
         let returnObject = {};

@@ -110,8 +110,6 @@ class DatabaseObject {
      * @property {String|String[]} [K] The Key or the list as Keys
      * @property {Object=} FK An Object where the key is the col name and the value the linked table/the linked col
      */
-
-
     /**
      * @param  {String} tablename
      * @param  {TableObject} table
