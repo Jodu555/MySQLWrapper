@@ -92,26 +92,24 @@ class DatabaseObject {
     }
 
     /**
-     * @typedef {Object} TableOptionsTimestamps*
-     * @property {Boolean} timestamps.cratedAt
-     * @property {Boolean} timestamps.updatedAt
-     * @property {Boolean} timestamps.deletedAt
+     * @typedef {Object} TableOptionsTimestamps
+     * @property {Boolean|String} [timestamps.cratedAt] If bool then the timestamp is active and if string, then what this Col should be called
+     * @property {Boolean|String} [timestamps.updatedAt] If bool then the timestamp is active and if string, then what this Col should be called
+     * @property {Boolean|String} [timestamps.deletedAt] If bool then the timestamp is active and if string, then what this Col should be called
      */
     /**
      * @typedef {Object} TableObject
      * @property {TableOptions=} options The table options
-     * @property {Object[]} COL All the columns in the table
+     * @property {String[]} * All the columns in the table
      */
     /**
      * @typedef {Object} TableOptions
-     * @property {Boolean=|TableOptionsTimestamps=} timestamps The timestamps as activation bools or as naming strings
+     * @property {TableOptionsTimestamps|Boolean} [timestamps] The timestamps as activation bools or as naming strings or as typical bools
      * @property {Boolean=} softdelete If the softdelete is active so the deletion never gets active and only deleted_at gets updated
      * @property {String=} PK The Primary Key of the table
-     * @property {(String=|[String]=)} K The Key or the list as Keys
+     * @property {String|String[]} [K] The Key or the list as Keys
      * @property {Object=} FK An Object where the key is the col name and the value the linked table/the linked col
      */
-
-
 
 
     /**
