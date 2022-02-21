@@ -85,6 +85,16 @@ class Schema {
         }
     }
 
+    valueOrFunctionInvocation(param) {
+        let value = null;
+        if (typeof param == 'function') {
+            value = param();
+        } else {
+            value = param;
+        }
+        return value;
+    }
+
     setupForRefTable() {
         delete this.ref_table.options;
 
@@ -132,21 +142,23 @@ class Schema {
 
             //Add Default Values
             if (parse.default && !value) {
-                if (typeof parse.default == 'function') {
-                    value = parse.default();
-                } else {
-                    value = parse.default;
-                }
+                value = valueOrFunctionInvocation(parse.default);
+                // if (typeof parse.default == 'function') {
+                //     value = parse.default();
+                // } else {
+                //     value = parse.default;
+                // }
                 obj[name] = value;
             }
 
             //Check if there is a predefined value
             if (parse.value) {
-                if (typeof parse.value == 'function') {
-                    value = parse.value();
-                } else {
-                    value = parse.value;
-                }
+                value = valueOrFunctionInvocation(parse.value);
+                // if (typeof parse.value == 'function') {
+                //     value = parse.value();
+                // } else {
+                //     value = parse.value;
+                // }
                 obj[name] = value;
             }
 
