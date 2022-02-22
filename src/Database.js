@@ -100,7 +100,6 @@ class DatabaseObject {
         output = output.filter(v => typeof v !== 'undefined');
         return output;
     }
-
     /**
      * @typedef {Object} TableOptionsTimestamps
      * @property {Boolean|String} [timestamps.cratedAt] If bool then the timestamp is active and if string, then what this Col should be called
