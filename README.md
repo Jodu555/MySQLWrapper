@@ -224,9 +224,6 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 - [x] Add the possibility to create indexes in tables
 - [x] Add the possibility to set callback functions for databse actions
 - [x] Add a function to get the latest one!!
-- [ ] Manage the return for the action callback functions to manipulate the return
-  - [ ] pre callbacks
-  - [ ] post callbacks
 - [ ] Engineer a newer way for the callbacks
   - [ ] 🤯 Hooks: 🤯
     - [ ] BeforeHook: You can manipulate the income object
