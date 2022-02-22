@@ -41,14 +41,16 @@ class DatabaseObject {
         });
     }
 
-    setCallback(identifier, cb) {
-        /**
-         *ACTION: CREATE / GET / GETONE / UPDATE / DELETE / Latest
+
+    /**
+     * @param  {String} identifier the update identifier ACTION: CREATE / GET / GETONE / UPDATE / DELETE / Latest
           Identifiers:
             tablename-ACTION : On a Specific Table a specific Action
             *-ACTION : On Any Table a specific Action
-            *-* : On any Table any Action
-        */
+            *-* : On any Table any Action 
+     * @param  {Function} cb the callback function which gets called
+     */
+    setCallback(identifier, cb) {
         if (this.callbacks.has(identifier)) {
             if (Array.isArray(this.callbacks.get(identifier))) {
                 this.callbacks.get(identifier).push(cb);
@@ -59,7 +61,11 @@ class DatabaseObject {
             this.callbacks.set(identifier, cb);
         }
     }
-
+    /**
+     * @param  {String} tablename
+     * @param  {String} action
+     * @param  {Object} data
+     */
     callCallback(tablename, action, data) {
         const cbs = this.callbackToFunctions(tablename, action).filter(v => typeof v == 'function');
         // console.log('Tried to call callback ' + cbs.join(', '));
@@ -71,7 +77,11 @@ class DatabaseObject {
             })
         });
     }
-
+    /**
+     * @param  {String} tablename
+     * @param  {String} action
+     * Translates the tablename and action into the identifiers
+     */
     callbackToFunctions(tablename, action) {
         if (!tablename || !action) {
             return [];
