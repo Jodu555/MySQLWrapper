@@ -23,6 +23,9 @@ class DatabaseObject {
         }
     }
 
+    /**
+     * Connects the database with the parameters initialized
+     */
     connect() {
         this.pool = mysql.createPool({
             connectionLimit: 10,
@@ -33,7 +36,9 @@ class DatabaseObject {
         });
         console.log('Database Pool Initialized!');
     }
-
+    /**
+     * Disconnects the database but no memory cleanup 
+     */
     disconnect() {
         this.pool.end(function (err) {
             console.log('Disconnected');
