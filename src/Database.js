@@ -45,8 +45,6 @@ class DatabaseObject {
             // all connections in the pool have ended
         });
     }
-
-
     /**
      * @param  {String} identifier the update identifier ACTION: CREATE / GET / GETONE / UPDATE / DELETE / Latest
           Identifiers:
