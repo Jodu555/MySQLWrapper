@@ -331,7 +331,7 @@ class DatabaseObject {
     }
     /**
      * @param  {String} name gets the cache by the name
-     * @returns {Cache} returns the cache
+     * @returns {import('./Cache')} returns the cache
      */
     getCache(name) {
         return this.caches.get(name);
@@ -346,7 +346,7 @@ class DatabaseObject {
     }
     /**
      * @param  {String} name the schema name
-     * @returns {Schema} returns the with the name associated schema
+     * @returns {import('./Schema')} returns the with the name associated schema
      */
     getSchema(name) {
         return this.schems.get(name);

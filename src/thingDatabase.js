@@ -1,5 +1,8 @@
 const { queryPartGeneration } = require('./generationUtils');
 class thingDatabase {
+	/**
+	 * @constructor
+	 */
 	constructor(table_name, options, database) {
 		this.table_name = table_name;
 		this.options = options;

@@ -3,6 +3,8 @@ const { Database } = require('../src/index');
 
 const database = Database.getDatabase();
 
+// database.get('test').
+
 // database.get('dsd').
 
 // const test1 = {
@@ -147,7 +149,7 @@ const wait = (m) => new Promise((r, j) => setTimeout(r, m));
 
 const cbs = [];
 
-regCallback(async(context, next) => {
+regCallback(async (context, next) => {
     console.log(1);
     await wait(1000)
     context.name = 'Roberto';
@@ -169,7 +171,7 @@ function regCallback(cb) {
 
 async function callCallback(data) {
     for (const x of cbs) {
-        await x(data, () => {});
+        await x(data, () => { });
     }
     return data;
 }
