@@ -235,7 +235,7 @@ class DatabaseObject {
     }
     /**
      * @param  {String} name the tablename
-     * @returns {import('./thingDatabase')} return the thing database object
+     * @returns {thingDatabase} return the thing database object
      */
     get(name) {
         if (this.tables.has(name))
@@ -331,7 +331,7 @@ class DatabaseObject {
     }
     /**
      * @param  {String} name gets the cache by the name
-     * @returns {import('./Cache')} returns the cache
+     * @returns {Cache} returns the cache
      */
     getCache(name) {
         return this.caches.get(name);
@@ -346,7 +346,7 @@ class DatabaseObject {
     }
     /**
      * @param  {String} name the schema name
-     * @returns {import('./Schema')} returns the with the name associated schema
+     * @returns {Schema} returns the with the name associated schema
      */
     getSchema(name) {
         return this.schems.get(name);
