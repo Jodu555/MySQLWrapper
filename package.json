@@ -6,8 +6,8 @@
 	"scripts": {
 		"start": "node src/index.js ",
 		"dev": "nodemon src/index.js ",
-		"test:start": "node src/index.js ",
-		"test:dev": "nodemon src/index.js "
+		"test:start": "node tests/test.js ",
+		"test:dev": "nodemon tests/test.js "
 	},
 	"keywords": [
 		"mysql API",

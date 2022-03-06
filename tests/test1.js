@@ -1,4 +1,9 @@
-// const { Database } = require('mysqlapi');
+const { Database } = require('../src/index');
+
+
+const database = Database.getDatabase();
+
+database.get('dsd').
 
 // const test1 = {
 //     softdelete: true,
