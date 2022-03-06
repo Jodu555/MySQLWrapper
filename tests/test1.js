@@ -3,7 +3,7 @@ const { Database } = require('../src/index');
 
 const database = Database.getDatabase();
 
-database.get('dsd').
+// database.get('dsd').
 
 // const test1 = {
 //     softdelete: true,
@@ -147,7 +147,7 @@ const wait = (m) => new Promise((r, j) => setTimeout(r, m));
 
 const cbs = [];
 
-regCallback(async (context, next) => {
+regCallback(async(context, next) => {
     console.log(1);
     await wait(1000)
     context.name = 'Roberto';
@@ -169,7 +169,7 @@ function regCallback(cb) {
 
 async function callCallback(data) {
     for (const x of cbs) {
-        await x(data, () => { });
+        await x(data, () => {});
     }
     return data;
 }

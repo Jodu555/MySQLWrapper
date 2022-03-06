@@ -147,7 +147,9 @@ class DatabaseObject {
             });
         }
 
-        let i = 0, parts = '', max = Object.keys(table).length;
+        let i = 0,
+            parts = '',
+            max = Object.keys(table).length;
         Object.keys(table).forEach(name => {
             i++;
             if (typeof table[name] === 'object') {
@@ -233,7 +235,7 @@ class DatabaseObject {
     }
     /**
      * @param  {String} name the tablename
-     * @returns {thingDatabase} return the thing database object
+     * @returns {import('./thingDatabase')} return the thing database object
      */
     get(name) {
         if (this.tables.has(name))

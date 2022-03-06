@@ -7,8 +7,6 @@ const database = Database.createDatabase('localhost', 'root', '', 'test');
 database.connect();
 
 
-
-
 const create_UUID = () => {
     var dt = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -212,4 +210,3 @@ const loginSchema = {
     // const user2 = await database.get('users').getLatest({ UUID: 'test' });
 
 })();
-
