@@ -118,7 +118,14 @@ const loginSchema = {
     }
 };
 
-
+const testschema = {
+    numi: {
+        type: 'INT',
+        required: true,
+        min: 0,
+        max: 999,
+    }
+};
 
 
 (async () => {
@@ -126,9 +133,15 @@ const loginSchema = {
 
     try {
 
-        const user = { username: 'Jodu555', email: 'editfusee@gmail.com', hack: '121212', ID: '==676760===', password: 'dsdsdsdsdsds', repeatPassword: 'dsdsdsdsdsds', state: 'activating' };
-        database.registerSchema('registerSchema', registerSchema, 'users');
-        database.registerSchema('loginSchema', loginSchema, 'users');
+        // const user = { username: 'Jodu555', email: 'editfusee@gmail.com', hack: '121212', ID: '==676760===', password: 'dsdsdsdsdsds', repeatPassword: 'dsdsdsdsdsds', state: 'activating' };
+        // database.registerSchema('registerSchema', registerSchema, 'users');
+        // database.registerSchema('loginSchema', loginSchema, 'users');
+
+        database.registerSchema('test', testschema);
+
+        console.log(database.getSchema('test').validate({
+            numi: "1"
+        }, false));
 
 
         // const data = database.getSchema('registerSchema').validate(user, false)
@@ -190,7 +203,7 @@ const loginSchema = {
         configurable: false
     });
 
-    console.log(obj, obj.UUID);
+    // console.log(obj, obj.UUID);
 
     // console.log(obj);
 

@@ -341,7 +341,7 @@ class DatabaseObject {
      * @param  {Object} schema the schema itself
      * @param  {String} reference_table_name the database reference_table_name not needed
      */
-    registerSchema(name, schema, reference_table_name) {
+    registerSchema(name, schema, reference_table_name = null) {
         this.schems.set(name, new Schema(name, schema, reference_table_name ? this.tables.get(reference_table_name).table : undefined));
     }
     /**

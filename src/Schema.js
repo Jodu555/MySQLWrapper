@@ -58,7 +58,8 @@ const testSchema = {
 class Schema {
     constructor(name, schema, ref_table) {
         this.name = name;
-        this.ref_table = JSON.parse(JSON.stringify(ref_table));
+        if (this.ref_table)
+            this.ref_table = JSON.parse(JSON.stringify(ref_table));
         this.options = schema.options;
         delete schema.options;
         this.schema = schema;
@@ -170,6 +171,12 @@ class Schema {
             if (parse.type)
                 Object.keys(this.validators).forEach(validator => {
                     if (new RegExp(this.validators[validator].join("|")).test(parse.type.toUpperCase()) && typeof value !== validator) {
+                        if (validator == 'number' && Number.isInteger(Number.parseInt(value))) {
+                            value = Number.parseInt(value)
+                            obj[name] = value;
+                            return;
+                        }
+
                         errors.push('Invalid value: ' + name + ' expected: ' + validator + '! But became: ' + typeof value);
                         return;
                     }
@@ -241,10 +248,10 @@ class Schema {
         const errors = [];
         let len = typeof value === 'string' ? value.length : value;
         //Check for min max parsing
-        if (parse.min && !(len >= parse.min)) {
+        if (parse.min !== undefined && !(len >= parse.min)) {
             errors.push('Parsing Error: ' + name + ' Must have at least ' + parse.min + ' Characters/Numbers! It has ' + len);
         }
-        if (parse.max && !(len <= parse.max)) {
+        if (parse.max !== undefined && !(len <= parse.max)) {
             errors.push('Parsing Error: ' + name + ' Must have under ' + parse.max + ' Characters/Numbers! It has ' + len);
         }
         return errors;
