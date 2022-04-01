@@ -105,7 +105,7 @@ class DatabaseObject {
     }
     /**
      * @typedef {Object} TableOptionsTimestamps
-     * @property {Boolean|String} [timestamps.cratedAt] If bool then the timestamp is active and if string, then what this Col should be called
+     * @property {Boolean|String} [timestamps.createdAt] If bool then the timestamp is active and if string, then what this Col should be called
      * @property {Boolean|String} [timestamps.updatedAt] If bool then the timestamp is active and if string, then what this Col should be called
      * @property {Boolean|String} [timestamps.deletedAt] If bool then the timestamp is active and if string, then what this Col should be called
      */
