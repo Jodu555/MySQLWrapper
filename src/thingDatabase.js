@@ -15,9 +15,9 @@ class thingDatabase {
 	 * @returns {Object} returns the actual inserted obect with for example a time
 	 */
 	create(thing) {
-		const timestamps = this.options.timestamps;
 		if (this.options && timestamps) {
-			Object.keys(timestamps).forEach(key => {
+			const timestamps = this.options.timestamps;
+			Object.keys(timestamps).forEach((key) => {
 				if (timestamps[key] !== 'deleted_at') {
 					thing[timestamps[key]] = Date.now();
 				} else {
@@ -87,12 +87,10 @@ class thingDatabase {
 					this.update(search, thing);
 				}
 			});
-			this.database.callCallback(this.table_name, 'UPDATE', { search, thing })
+			this.database.callCallback(this.table_name, 'UPDATE', { search, thing });
 			return await this.get(search);
 		} catch (error) {
-			const errormsg = `${this.name} Update Failed: searchTerm: ${JSON.stringify(
-				search
-			)} Update: ${JSON.stringify(thing)}  Error: ${error.message}`;
+			const errormsg = `${this.name} Update Failed: searchTerm: ${JSON.stringify(search)} Update: ${JSON.stringify(thing)}  Error: ${error.message}`;
 			throw new Error(errormsg);
 		}
 	}
@@ -140,7 +138,7 @@ class thingDatabase {
 	 */
 	async delete(search) {
 		if (this.options && this.options.softdelete && this.options.timestamps && this.options.timestamps.deletedAt) {
-			const obj = {}
+			const obj = {};
 			obj[this.options.timestamps.deletedAt] = Date.now();
 			await this.update(search, obj);
 			return;
@@ -183,8 +181,7 @@ class thingDatabase {
 				this.database.callCallback(this.table_name, 'LATEST', { action, search });
 				return new Promise(async (resolve, reject) => {
 					await this.pool.query(query, values, async (error, results, fields) => {
-						if (error)
-							throw error;
+						if (error) throw error;
 						if (results.length == 0) resolve(null);
 						await results.forEach((result) => {
 							resolve(result);
