@@ -211,6 +211,7 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 - [AmazonPriceTracker](https://github.com/Jodu555/AmazonPriceTracker)
 - [YouTube-ChatBot](https://github.com/Jodu555/YouTube-ChatBot)
 - [Ez-Uploader](https://ez-uploader.de)
+- [CineFinn](https://github.com/Jodu555/CineFinn)
 
 ## Todos
 
