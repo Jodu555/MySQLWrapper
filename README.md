@@ -214,7 +214,8 @@ database.setCallback('IDENTIFIER', ({ tablename, action, data }) => {
 
 ## Todos
 
-- [ ] Document all the public functions with jsdoc so the usage gets easier
+- [ ] ~~Document all the public functions with jsdoc so the usage gets easier~~
+- [ ] Instead of JSDoc just rewrite in TypeScript would also make the DevEx much better
 - [x] Implement the pooling system so the connections dont fail
 - [ ] Keep track of the actions obj in the thingdatabase
 - [ ] Implement pseudo values which are based on actual values
