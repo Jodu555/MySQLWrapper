@@ -15,7 +15,7 @@ class thingDatabase {
 	 * @returns {Object} returns the actual inserted obect with for example a time
 	 */
 	create(thing) {
-		if (this.options && timestamps) {
+		if (this.options && this.options.timestamps) {
 			const timestamps = this.options.timestamps;
 			Object.keys(timestamps).forEach((key) => {
 				if (timestamps[key] !== 'deleted_at') {
