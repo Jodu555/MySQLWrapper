@@ -1,4 +1,4 @@
-import { PoolConfig } from 'mysql';
+import { PoolConfig, Pool } from 'mysql';
 
 declare module '@jodu555/mysqlapi' {
     interface IOverDatabase {
@@ -28,6 +28,7 @@ declare module '@jodu555/mysqlapi' {
     type Table<T extends object> = { options?: TableOptions; } & { [K in keyof T]: K extends 'options' ? TableOptions : TypeOptions | string };
 
     interface Database {
+        pool: Pool;
         connect: (additionalOptions?: PoolConfig) => void;
         createTable: <T extends Table<T>>(tablename: string, table: T) => void;
         registerSchema: (name: string, schema: object, reference_table_name: string) => void;
