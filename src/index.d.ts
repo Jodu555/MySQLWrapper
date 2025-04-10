@@ -28,7 +28,7 @@ declare module '@jodu555/mysqlapi' {
     type Table<T extends object> = { options?: TableOptions; } & { [K in keyof T]: K extends 'options' ? TableOptions : TypeOptions | string };
 
     interface Database {
-        connect: (additionalOptions: PoolConfig) => void;
+        connect: (additionalOptions?: PoolConfig) => void;
         createTable: <T extends Table<T>>(tablename: string, table: T) => void;
         registerSchema: (name: string, schema: object, reference_table_name: string) => void;
         get: <X>(thing: string) => thingDatabase<X>;
