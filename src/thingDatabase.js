@@ -90,7 +90,9 @@ class thingDatabase {
 			this.database.callCallback(this.table_name, 'UPDATE', { search, thing });
 			return await this.get(search);
 		} catch (error) {
-			const errormsg = `${this.name} Update Failed: searchTerm: ${JSON.stringify(search)} Update: ${JSON.stringify(thing)}  Error: ${error.message}`;
+			const errormsg = `${this.name} Update Failed: searchTerm: ${JSON.stringify(search)} Update: ${JSON.stringify(thing)}  Error: ${
+				error.message
+			}`;
 			throw new Error(errormsg);
 		}
 	}
