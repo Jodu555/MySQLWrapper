@@ -36,13 +36,15 @@ declare module '@jodu555/mysqlapi' {
         getSchema: (name: string) => Schema;
     }
 
+    type SearchType = Partial<X & ?{ unique: boolean; }>;
+
     interface thingDatabase<X> {
         create: (thing: X) => Promise<X>;
-        update: (search: Partial<X>, thing: Partial<X>) => Promise<void>;
-        getOne: (search?: Partial<X>) => Promise<X>;
-        get: (search?: Partial<X>) => Promise<[X]>;
-        delete: (search: Partial<X>) => Promise<void>;
-        getLatest: (action: 'inserted' | 'updated' | 'deleted', search?: Partial<X>) => Promise<X>;
+        update: (search: SearchType, thing: Partial<X>) => Promise<void>;
+        getOne: (search?: SearchType) => Promise<?X?>;
+        get: (search?: SearchType) => Promise<X[]>;
+        delete: (search: SearchType) => Promise<void>;
+        getLatest: (action: 'inserted' | 'updated' | 'deleted', search?: Partial<X>) => Promise<?X?>;
     }
 
     type ValidationReturn = {
