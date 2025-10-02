@@ -14,46 +14,57 @@ class thingDatabase {
 	 * @param  {Object} thing the thing you want to create
 	 * @returns {Object} returns the actual inserted obect with for example a time
 	 */
-	create(thing) {
-		if (this.options && this.options.timestamps) {
-			const timestamps = this.options.timestamps;
-			Object.keys(timestamps).forEach((key) => {
-				if (timestamps[key] !== 'deleted_at') {
-					thing[timestamps[key]] = Date.now();
-				} else {
-					thing[timestamps[key]] = false;
+	async create(thing) {
+		return new Promise(async (resolve, reject) => {
+			if (this.options && this.options.timestamps) {
+				const timestamps = this.options.timestamps;
+				Object.keys(timestamps).forEach((key) => {
+					if (timestamps[key] !== 'deleted_at') {
+						thing[timestamps[key]] = Date.now();
+					} else {
+						thing[timestamps[key]] = false;
+					}
+				});
+			}
+			const len = Object.keys(thing).length;
+			const values = [];
+			let partsQuery = '(';
+			let valueQuery = '(';
+			let i = 0;
+			Object.keys(thing).forEach((key) => {
+				values.push(thing[key]);
+				i++;
+				valueQuery += '?';
+				if (len != i) {
+					valueQuery += ', ';
+				}
+				partsQuery += key;
+				if (len != i) {
+					partsQuery += ', ';
 				}
 			});
-		}
-		const len = Object.keys(thing).length;
-		const values = [];
-		let partsQuery = '(';
-		let valueQuery = '(';
-		let i = 0;
-		Object.keys(thing).forEach((key) => {
-			values.push(thing[key]);
-			i++;
-			valueQuery += '?';
-			if (len != i) {
-				valueQuery += ', ';
+			valueQuery += ')';
+			partsQuery += ')';
+			let query = `INSERT INTO ${this.table_name} ${partsQuery} VALUES ${valueQuery}`;
+			try {
+				await new Promise((innerResolve, innerReject) => {
+					this.pool.query(query, values, (error, results, fields) => {
+						if (error) {
+							innerReject(error);
+							// throw error;
+							// this.database.reconnect();
+							// this.create(thing);
+						}
+						innerResolve(results);
+					});
+					this.database.callCallback(this.table_name, 'CREATE', thing);
+				});
+			} catch (error) {
+				console.log(error);
+				reject(error);
 			}
-			partsQuery += key;
-			if (len != i) {
-				partsQuery += ', ';
-			}
+			resolve(thing);
 		});
-		valueQuery += ')';
-		partsQuery += ')';
-		let query = `INSERT INTO ${this.table_name} ${partsQuery} VALUES ${valueQuery}`;
-		this.pool.query(query, values, (error, results, fields) => {
-			if (error) {
-				throw error;
-				this.database.reconnect();
-				this.create(thing);
-			}
-		});
-		this.database.callCallback(this.table_name, 'CREATE', thing);
-		return thing;
 	}
 	/**
 	 * @param  {Object} search The search on what you want to update
@@ -80,14 +91,22 @@ class thingDatabase {
 
 			const values = part.values.concat(parts.values);
 
-			this.pool.query(query, values, (error, results, fields) => {
-				if (error) {
-					throw error;
-					this.database.reconnect();
-					this.update(search, thing);
-				}
-			});
-			this.database.callCallback(this.table_name, 'UPDATE', { search, thing });
+			try {
+				await new Promise((resolve, reject) => {
+					this.pool.query(query, values, (error, results, fields) => {
+						if (error) {
+							reject(error);
+							// throw error;
+							// this.database.reconnect();
+							// this.update(search, thing);
+						}
+						resolve(results);
+					});
+				});
+				this.database.callCallback(this.table_name, 'UPDATE', { search, thing });
+			} catch (error) {
+				console.log(error);
+			}
 			return await this.get(search);
 		} catch (error) {
 			const errormsg = `${this.name} Update Failed: searchTerm: ${JSON.stringify(search)} Update: ${JSON.stringify(thing)}  Error: ${
@@ -108,7 +127,7 @@ class thingDatabase {
 	}
 	/**
 	 * @param  {Object} search the search wich elements you want to get
-	 * @returns {Object[]} an array of objects that are found to the search
+	 * @returns {Promise<Object[]>} an array of objects that are found to the search
 	 */
 	async get(search) {
 		let query = 'SELECT * FROM ' + this.table_name;
@@ -124,7 +143,7 @@ class thingDatabase {
 			await this.pool.query(query, values, async (error, results, fields) => {
 				const data = [];
 				if (error) {
-					throw error;
+					reject(error);
 					this.database.reconnect();
 					this.get(search);
 				}
@@ -149,14 +168,15 @@ class thingDatabase {
 		const part = queryPartGeneration(search);
 		query += part.query;
 		const values = part.values;
-		this.pool.query(query, values, (error, results, fields) => {
-			if (error) {
-				throw error;
-				this.database.reconnect();
-				this.delete(search);
-			}
+		return new Promise((resolve, reject) => {
+			this.pool.query(query, values, (error, results, fields) => {
+				if (error) {
+					reject(error);
+				}
+			});
+			this.database.callCallback(this.table_name, 'DELETE', search);
+			resolve();
 		});
-		this.database.callCallback(this.table_name, 'DELETE', search);
 	}
 	/**
 	 * @param  {String} action the latest action you wanna get can be: inserted, updated or deleted
