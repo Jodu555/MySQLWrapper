@@ -176,7 +176,7 @@ class DatabaseObject {
 			}
 		});
 
-		this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, options, this) });
+		this.tables.set(tablename, { table: tablecopy, database: new thingDatabase(tablename, options, this, tablecopy) });
 	}
 
 	parseTimeStamps(options) {

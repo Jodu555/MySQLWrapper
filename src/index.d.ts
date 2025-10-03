@@ -23,6 +23,7 @@ declare module '@jodu555/mysqlapi' {
     interface TypeOptions {
         type: String;
         null?: Boolean;
+        json?: Boolean;
     }
 
     type Table<T extends object> = { options?: TableOptions; } & { [K in keyof T]: K extends 'options' ? TableOptions : TypeOptions | string };

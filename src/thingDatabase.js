@@ -3,11 +3,15 @@ class thingDatabase {
 	/**
 	 * @constructor
 	 */
-	constructor(table_name, options, database) {
+	constructor(table_name, options, database, table) {
 		this.table_name = table_name;
 		this.options = options;
 		this.database = database;
 		this.pool = this.database.pool;
+		this.jsonFields = Object.entries(table)
+			.filter(([k, v]) => v.json === true)
+			.map((v) => v[0]);
+
 		console.log(this.table_name + ' Database Initialized');
 	}
 	/**
@@ -23,6 +27,13 @@ class thingDatabase {
 						thing[timestamps[key]] = Date.now();
 					} else {
 						thing[timestamps[key]] = false;
+					}
+				});
+			}
+			if (this.jsonFields.length > 0) {
+				this.jsonFields.forEach((key) => {
+					if (typeof thing[key] !== 'string') {
+						thing[key] = JSON.stringify(thing[key]);
 					}
 				});
 			}
@@ -76,6 +87,15 @@ class thingDatabase {
 				thing[this.options.timestamps.updatedAt] = Date.now();
 			}
 		}
+
+		if (this.jsonFields.length > 0) {
+			this.jsonFields.forEach((key) => {
+				if (typeof thing[key] !== 'string') {
+					thing[key] = JSON.stringify(thing[key]);
+				}
+			});
+		}
+
 		try {
 			if (!Object.keys(thing).length > 0) {
 				throw new Error('Invalid thing update Object');
@@ -148,6 +168,13 @@ class thingDatabase {
 					this.get(search);
 				}
 				await results.forEach((result) => {
+					if (this.jsonFields.length > 0) {
+						this.jsonFields.forEach((key) => {
+							if (typeof result[key] === 'string') {
+								result[key] = JSON.parse(result[key]);
+							}
+						});
+					}
 					data.push(result);
 				});
 				resolve(data);
