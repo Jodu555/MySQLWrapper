@@ -33,7 +33,7 @@ declare module '@jodu555/mysqlapi' {
         connect: (additionalOptions?: PoolConfig) => void;
         createTable: <T extends Table<T>>(tablename: string, table: T) => void;
         registerSchema: (name: string, schema: object, reference_table_name: string) => void;
-        get: <X>(thing: string) => thingDatabase<X>;
+        get: <C, G = C>(thing: string) => thingDatabase<C, G>;
         getSchema: (name: string) => Schema;
     }
 
@@ -43,13 +43,13 @@ declare module '@jodu555/mysqlapi' {
     } & {};
 
     type SearchType<X> = Partial<X & { unique?: boolean; }>;
-    interface thingDatabase<X> {
-        create: (thing: X) => Promise<X>;
-        update: (search: SearchType<X>, thing: Partial<X>) => Promise<void>;
-        getOne: (search?: SearchType<X>) => Promise<X | null>;
-        get: (search?: SearchType<X>) => Promise<X[]>;
-        delete: (search: SearchType<X>) => Promise<void>;
-        getLatest: (action: 'inserted' | 'updated' | 'deleted', search?: Partial<X>) => Promise<X | null>;
+    interface thingDatabase<C, G = C> {
+        create: (thing: C) => Promise<G>;
+        update: (search: SearchType<C>, thing: Partial<C>) => Promise<void>;
+        getOne: (search?: SearchType<C>) => Promise<G | null>;
+        get: (search?: SearchType<C>) => Promise<G[]>;
+        delete: (search: SearchType<C>) => Promise<void>;
+        getLatest: (action: 'inserted' | 'updated' | 'deleted', search?: Partial<C>) => Promise<G | null>;
     }
 
     type ValidationReturn = {
