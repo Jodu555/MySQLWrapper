@@ -8,9 +8,13 @@ class thingDatabase {
 		this.options = options;
 		this.database = database;
 		this.pool = this.database.pool;
-		this.jsonFields = Object.entries(table)
-			.filter(([k, v]) => v.json === true)
-			.map((v) => v[0]);
+		if(table !== undefined) {
+			this.jsonFields = Object.entries(table)
+				.filter(([k, v]) => v.json === true)
+				.map((v) => v[0]);
+		} else {
+			this.jsonFields = [];
+		}
 
 		console.log(this.table_name + ' Database Initialized');
 	}
