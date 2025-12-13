@@ -94,7 +94,7 @@ class thingDatabase {
 
 		if (this.jsonFields.length > 0) {
 			this.jsonFields.forEach((key) => {
-				if (typeof thing[key] !== 'string') {
+				if (thing.hasOwnProperty(key) && typeof thing[key] !== 'string') {
 					thing[key] = JSON.stringify(thing[key]);
 				}
 			});
