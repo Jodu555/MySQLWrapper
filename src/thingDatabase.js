@@ -8,7 +8,7 @@ class thingDatabase {
 		this.options = options;
 		this.database = database;
 		this.pool = this.database.pool;
-		if(table !== undefined) {
+		if (table !== undefined) {
 			this.jsonFields = Object.entries(table)
 				.filter(([k, v]) => v.json === true)
 				.map((v) => v[0]);
@@ -133,9 +133,7 @@ class thingDatabase {
 			}
 			return await this.get(search);
 		} catch (error) {
-			const errormsg = `${this.name} Update Failed: searchTerm: ${JSON.stringify(search)} Update: ${JSON.stringify(thing)}  Error: ${
-				error.message
-			}`;
+			const errormsg = `${this.name} Update Failed: searchTerm: ${JSON.stringify(search)} Update: ${JSON.stringify(thing)}  Error: ${error.message}`;
 			throw new Error(errormsg);
 		}
 	}
@@ -181,6 +179,32 @@ class thingDatabase {
 					}
 					data.push(result);
 				});
+				resolve(data);
+			});
+		});
+	}
+	/**
+	 * @param  {Object} search the search wich elements you want to get
+	 * @returns {Promise<number>} the number of rows counted under the search
+	 */
+	async count(search) {
+		let query = 'SELECT COUNT(*) FROM ' + this.table_name;
+		let values;
+		if (search && Object.keys(search).length > 0) {
+			query = 'SELECT COUNT(*) FROM ' + this.table_name + ' WHERE ';
+			const part = queryPartGeneration(search);
+			query += part.query;
+			values = part.values;
+		}
+		this.database.callCallback(this.table_name, 'COUNT', search);
+		return new Promise(async (resolve, reject) => {
+			await this.pool.query(query, values, async (error, results, fields) => {
+				if (error) {
+					reject(error);
+					this.database.reconnect();
+					this.get(search);
+				}
+				const data = Object.values(results[0])[0];
 				resolve(data);
 			});
 		});

@@ -44,10 +44,16 @@ declare module '@jodu555/mysqlapi' {
 
     type SearchType<X> = Partial<X & { unique?: boolean; }>;
     interface thingDatabase<C, G = C> {
+        table_name: string;
+        options: TableOptions;
+        database: Database;
+        pool: Pool;
+        jsonFields: string[];
         create: (thing: C) => Promise<G>;
         update: (search: SearchType<C>, thing: Partial<C>) => Promise<void>;
         getOne: (search?: SearchType<C>) => Promise<G | null>;
         get: (search?: SearchType<C>) => Promise<G[]>;
+        count: (search?: SearchType<C>) => Promise<number>;
         delete: (search: SearchType<C>) => Promise<void>;
         getLatest: (action: 'inserted' | 'updated' | 'deleted', search?: Partial<C>) => Promise<G | null>;
     }
