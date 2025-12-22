@@ -30,6 +30,16 @@ declare module '@jodu555/mysqlapi' {
 
     interface Database {
         pool: Pool;
+        host: string;
+        user: string;
+        password: string;
+        database: string;
+        tables: Map<string, { table: Table<any>; database: thingDatabase<any>; }>;
+        callbacks: Map<string, Function[]>;
+        caches: Map<string, any>;
+        schems: Map<string, Schema>;
+        ParsingError: Error;
+        validators: Object;
         connect: (additionalOptions?: PoolConfig) => void;
         createTable: <T extends Table<T>>(tablename: string, table: T) => void;
         registerSchema: (name: string, schema: object, reference_table_name: string) => void;
