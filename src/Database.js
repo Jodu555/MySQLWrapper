@@ -46,7 +46,7 @@ class DatabaseObject {
 		});
 	}
 	/**
-     * @param  {String} identifier the update identifier ACTION: CREATE / GET / GETONE / UPDATE / DELETE / Latest
+     * @param  {String} identifier the update identifier ACTION: CREATE / GET / GETONE / COUNT / UPDATE / DELETE / Latest
           Identifiers:
             tablename-ACTION : On a Specific Table a specific Action
             *-ACTION : On Any Table a specific Action

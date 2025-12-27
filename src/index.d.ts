@@ -28,6 +28,8 @@ declare module '@jodu555/mysqlapi' {
 
     type Table<T extends object> = { options?: TableOptions; } & { [K in keyof T]: K extends 'options' ? TableOptions : TypeOptions | string };
 
+    type CallbackFunction = (obj: { tablename: string; action: string; data: object; }) => void;
+
     interface Database {
         pool: Pool;
         host: string;
@@ -45,6 +47,8 @@ declare module '@jodu555/mysqlapi' {
         registerSchema: (name: string, schema: object, reference_table_name: string) => void;
         get: <C, G = C>(thing: string) => thingDatabase<C, G>;
         getSchema: (name: string) => Schema;
+        setCallback: (identifier: string, cb: CallbackFunction) => void;
+        callCallback: (tablename: string, action: string, data: object) => void;
     }
 
 
