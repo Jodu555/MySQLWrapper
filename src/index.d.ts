@@ -43,7 +43,7 @@ declare module '@jodu555/mysqlapi' {
         ParsingError: Error;
         validators: Object;
         connect: (additionalOptions?: PoolConfig) => void;
-        createTable: <T extends Table<T>>(tablename: string, table: T) => void;
+        createTable: <T extends Table<T>>(tablename: string, table: T) => Promise<void>;
         registerSchema: (name: string, schema: object, reference_table_name: string) => void;
         get: <C, G = C>(thing: string) => thingDatabase<C, G>;
         getSchema: (name: string) => Schema;

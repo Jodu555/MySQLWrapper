@@ -126,7 +126,7 @@ class DatabaseObject {
 	 * @param  {String} tablename
 	 * @param  {TableObject} table
 	 */
-	createTable(tablename, table) {
+	async createTable(tablename, table) {
 		const stamps = new Map([
 			['createdAt', 'created_at'],
 			['updatedAt', 'updated_at'],
@@ -164,8 +164,11 @@ class DatabaseObject {
 		parts = this.parseFKandPKandK(tablename, options, parts);
 
 		let sql = 'CREATE TABLE IF NOT EXISTS ' + tablename + ' (' + parts + ')';
-		this.pool.query(sql, (error, results, fields) => {
-			if (error) throw error;
+		await new Promise((resolve, reject) => {
+			this.pool.query(sql, (error, results, fields) => {
+				if (error) reject(error);
+				resolve();
+			});
 		});
 		Object.keys(tablecopy).forEach((name) => {
 			if (typeof tablecopy[name] === 'string') {
