@@ -23,6 +23,7 @@ class thingDatabase {
 	 * @returns {Object} returns the actual inserted obect with for example a time
 	 */
 	async create(thing) {
+		thing = JSON.parse(JSON.stringify(thing));
 		return new Promise(async (resolve, reject) => {
 			if (this.options && this.options.timestamps) {
 				const timestamps = this.options.timestamps;
@@ -66,9 +67,6 @@ class thingDatabase {
 					this.pool.query(query, values, (error, results, fields) => {
 						if (error) {
 							innerReject(error);
-							// throw error;
-							// this.database.reconnect();
-							// this.create(thing);
 						}
 						innerResolve(results);
 					});
@@ -86,6 +84,7 @@ class thingDatabase {
 	 * @param  {Object} thing The thing you want the search results to be updated with
 	 */
 	async update(search, thing) {
+		thing = JSON.parse(JSON.stringify(thing));
 		if (this.options && this.options.timestamps) {
 			if (this.options.timestamps.updatedAt) {
 				thing[this.options.timestamps.updatedAt] = Date.now();
@@ -166,8 +165,8 @@ class thingDatabase {
 				const data = [];
 				if (error) {
 					reject(error);
-					this.database.reconnect();
-					this.get(search);
+					// this.database.reconnect();
+					// this.get(search);
 				}
 				await results.forEach((result) => {
 					if (this.jsonFields.length > 0) {
@@ -201,8 +200,6 @@ class thingDatabase {
 			await this.pool.query(query, values, async (error, results, fields) => {
 				if (error) {
 					reject(error);
-					this.database.reconnect();
-					this.get(search);
 				}
 				const data = Object.values(results[0])[0];
 				resolve(data);
