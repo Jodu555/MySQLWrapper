@@ -246,12 +246,15 @@ class thingDatabase {
 			const timeRow = stampsDict.get(action.toLowerCase());
 			if (timeRow) {
 				let query = 'SELECT * FROM ' + this.table_name;
-				let values;
-				if (search) {
+				let values = [];
+				if (search && Object.keys(search) > 0) {
 					query = 'SELECT * FROM ' + this.table_name + ' WHERE ';
 					const part = queryPartGeneration(search);
-					query += part.query;
-					values = part.values;
+					if (part.values.length > 0 && part.query.length > 0) {
+						query += 'WHERE ';
+						query += part.query;
+						values.push(...part.values);
+					}
 				}
 				query += ' ORDER BY ' + timeRow + ' DESC LIMIT ?';
 				values.push(limit);
@@ -260,7 +263,7 @@ class thingDatabase {
 					await this.pool.query(query, values, async (error, results, fields) => {
 						const data = [];
 						if (error) throw error;
-						if (results.length == 0) resolve(null);
+						if (results.length == 0) resolve(data);
 						await results.forEach((result) => {
 							if (this.jsonFields.length > 0) {
 								this.jsonFields.forEach((key) => {
