@@ -56,6 +56,8 @@ declare module '@jodu555/mysqlapi' {
         [K in keyof T]: T[K];
     } & {};
 
+    type TimeStampAction = 'inserted' | 'created' | 'updated' | 'deleted';
+
     type SearchType<X> = Partial<X & { unique?: boolean; }>;
     interface thingDatabase<C, G = C> {
         table_name: string;
@@ -69,7 +71,7 @@ declare module '@jodu555/mysqlapi' {
         get: (search?: SearchType<C>) => Promise<G[]>;
         count: (search?: SearchType<C>) => Promise<number>;
         delete: (search: SearchType<C>) => Promise<void>;
-        getLatest: (action: 'inserted' | 'updated' | 'deleted', search?: Partial<C>) => Promise<G | null>;
+        getLatest: (action: TimeStampAction, search?: Partial<C>, limit?: number = 1) => Promise<G | null>;
     }
 
     type ValidationReturn = {

@@ -233,9 +233,11 @@ class thingDatabase {
 	/**
 	 * @param  {String} action the latest action you wanna get can be: inserted, updated or deleted
 	 * @param  {Object} search the search wich element you want to get the latet on
+	 * @param  {Number} limit the limit of the results you want to get (default: 1)
 	 */
-	async getLatest(action, search) {
+	async getLatest(action, search, limit = 1) {
 		const stampsDict = new Map([
+			['created', this.options.timestamps.createdAt],
 			['inserted', this.options.timestamps.createdAt],
 			['updated', this.options.timestamps.updatedAt],
 			['deleted', this.options.timestamps.deletedAt],
@@ -251,7 +253,8 @@ class thingDatabase {
 					query += part.query;
 					values = part.values;
 				}
-				query += ' ORDER BY ' + timeRow + ' DESC LIMIT 1';
+				query += ' ORDER BY ' + timeRow + ' DESC LIMIT ?';
+				values.push(limit);
 				this.database.callCallback(this.table_name, 'LATEST', { action, search });
 				return new Promise(async (resolve, reject) => {
 					await this.pool.query(query, values, async (error, results, fields) => {
