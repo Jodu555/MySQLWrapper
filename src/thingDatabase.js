@@ -258,11 +258,20 @@ class thingDatabase {
 				this.database.callCallback(this.table_name, 'LATEST', { action, search });
 				return new Promise(async (resolve, reject) => {
 					await this.pool.query(query, values, async (error, results, fields) => {
+						const data = [];
 						if (error) throw error;
 						if (results.length == 0) resolve(null);
 						await results.forEach((result) => {
-							resolve(result);
+							if (this.jsonFields.length > 0) {
+								this.jsonFields.forEach((key) => {
+									if (typeof result[key] === 'string') {
+										result[key] = JSON.parse(result[key]);
+									}
+								});
+							}
+							data.push(result);
 						});
+						resolve(data);
 					});
 				});
 			} else {

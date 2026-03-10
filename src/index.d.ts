@@ -71,7 +71,7 @@ declare module '@jodu555/mysqlapi' {
         get: (search?: SearchType<C>) => Promise<G[]>;
         count: (search?: SearchType<C>) => Promise<number>;
         delete: (search: SearchType<C>) => Promise<void>;
-        getLatest: (action: TimeStampAction, search?: Partial<C>, limit?: number = 1) => Promise<G | null>;
+        getLatest: (action: TimeStampAction, search?: Partial<C>, limit?: number = 1) => Promise<G[]>;
     }
 
     type ValidationReturn = {
