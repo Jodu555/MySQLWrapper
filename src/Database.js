@@ -353,11 +353,17 @@ class DatabaseObject {
  * @param  {String} user the user of the database
  * @param  {String} password the password of the database
  * @param  {String} database the database in the database
+ * @param  {Boolean} assign if the database should be assigned to the global variable (stored) default true
  * @returns {DatabaseObject} returns the database object
  */
-function createDatabase(host, user, password, database) {
-	this.database = new DatabaseObject(host, user, password, database);
-	return this.database;
+function createDatabase(host, user, password, database, assign = true) {
+	const databaseObject = new DatabaseObject(host, user, password, database);
+	if (assign) {
+		this.database = databaseObject;
+		return this.database;
+	} else {
+		return databaseObject;
+	}
 }
 /**
  * @returns {DatabaseObject} returns the database object
