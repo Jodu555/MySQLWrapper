@@ -73,7 +73,6 @@ class thingDatabase {
 					this.database.callCallback(this.table_name, 'CREATE', thing);
 				});
 			} catch (error) {
-				console.log(error);
 				reject(error);
 			}
 			resolve(thing);
@@ -128,7 +127,7 @@ class thingDatabase {
 				});
 				this.database.callCallback(this.table_name, 'UPDATE', { search, thing });
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 			return await this.get(search);
 		} catch (error) {
@@ -262,7 +261,7 @@ class thingDatabase {
 				return new Promise(async (resolve, reject) => {
 					await this.pool.query(query, values, async (error, results, fields) => {
 						const data = [];
-						if (error) throw error;
+						if (error) reject(error);
 						if (results.length == 0) resolve(data);
 						await results.forEach((result) => {
 							if (this.jsonFields.length > 0) {
