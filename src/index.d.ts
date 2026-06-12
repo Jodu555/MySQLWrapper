@@ -1,5 +1,7 @@
 import { PoolConfig, Pool } from 'mysql';
 
+export { MysqlError } from 'mysql'
+
 declare module '@jodu555/mysqlapi' {
     interface IOverDatabase {
         createDatabase: (host: string, username: string, password: string, database: string, assign?: boolean = true) => Database;
